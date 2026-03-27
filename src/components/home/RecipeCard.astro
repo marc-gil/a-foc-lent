@@ -1,0 +1,151 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ClockIcon from "./ClockIcon.astro";
+import { formatDuration } from "../../lib/duration";
+
+interface Props {
+  recipe: CollectionEntry<"recipes">;
+}
+
+const { data: recipeData } = Astro.props.recipe;
+---
+
+<article>
+  <span class="category" data-category={recipeData.category}>
+    {recipeData.category}
+  </span>
+
+  <figure>
+    <img src={recipeData.thumbnail.src} alt={recipeData.title} />
+    <figcaption class="visually-hidden">{recipeData.title}</figcaption>
+  </figure>
+
+  <h2>
+    <a href={`/recipes/${Astro.props.recipe.id}`}>{recipeData.title}</a>
+  </h2>
+  {
+    recipeData.tags && (
+      <ul aria-label="Etiquetes">
+        {recipeData.tags.map((tag) => (
+          <li>{tag}</li>
+        ))}
+      </ul>
+    )
+  }
+  <hr />
+  <footer>
+    <span data-difficulty={recipeData.difficulty} class="difficulty">
+      {recipeData.difficulty}
+    </span>
+    <time datetime={recipeData.duration}>
+      <ClockIcon aria-hidden="true" focusable="false" />
+      {formatDuration(recipeData.duration)}
+    </time>
+  </footer>
+</article>
+
+<script>
+  let selectedCategory: string;
+  let searchInput: string = "";
+  const recipeCards = document.querySelectorAll("article");
+  document.addEventListener("filter-changed", (e) => {
+    selectedCategory = (e as CustomEvent<{ filter: string }>).detail.filter;
+
+    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
+  });
+
+  document.addEventListener("search-input-changed", (e) => {
+    searchInput = (
+      e as CustomEvent<{ search: string }>
+    ).detail.search.toLowerCase();
+
+    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
+  });
+
+  function applyFilters(recipeCard: HTMLElement) {
+    const liElement = recipeCard.parentElement!;
+    const catageorySpan = recipeCard!.firstElementChild as HTMLElement;
+
+    const title = Array.from(recipeCard.children)
+      .filter((child) => child.tagName == "H2")[0]
+      .textContent.toLowerCase();
+
+    const textMatches = title.includes(searchInput) || searchInput == "";
+    const categoryMatches =
+      selectedCategory === "" ||
+      catageorySpan.dataset.category === selectedCategory;
+
+    liElement.style.display = textMatches && categoryMatches ? "block" : "none";
+  }
+</script>
+
+<style>
+  article {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 16px;
+    background-color: #fff;
+  }
+
+  img {
+    height: 160px;
+  }
+
+  h2 {
+    margin-bottom: 18px;
+    position: static;
+  }
+
+  h2 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+  }
+
+  footer {
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  time {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  figure {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 8px;
+    align-items: center;
+  }
+
+  .category {
+    position: absolute;
+    width: fit-content;
+    padding: 8px 16px;
+    border-radius: 16px;
+    color: #444;
+    font-size: small;
+    top: 24px;
+    right: 24px;
+  }
+
+  .difficulty {
+    width: fit-content;
+    padding: 8px 16px;
+    border-radius: 16px;
+    font-size: small;
+    color: #444;
+  }
+</style>

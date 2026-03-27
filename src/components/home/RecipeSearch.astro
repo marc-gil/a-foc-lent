@@ -1,0 +1,80 @@
+---
+import SearchInput from "../../components/home/SearchInput.astro";
+
+interface Props {
+  filters: string[];
+}
+
+const {filters} = Astro.props; 
+---
+
+<search>
+  <SearchInput />
+  <nav aria-label="Filtre per àpat">
+    <fieldset>
+      <legend class="visually-hidden">Filtre per àpat</legend>
+      <ul role="list">
+        <li>
+          <input type="radio" name="recipe-filter" id="tots" value="" checked />
+          <label for="tots">Tots</label>
+        </li>
+        {
+          filters.map((filter) => (
+            <li>
+              <input type="radio" name="recipe-filter" id={filter.toLowerCase()} value={filter}/>
+              <label data-category={filter} for={filter.toLowerCase()}>{filter}</label>
+            </li>
+          ))
+        }
+      </ul>
+    </fieldset>
+  </nav>
+</search>
+
+<script>
+  const filterRadioButtons = document.querySelectorAll("input[name='recipe-filter']");
+  filterRadioButtons.forEach(filterRadioButton => {
+    filterRadioButton.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      const event = new CustomEvent('filter-changed', {
+        bubbles: true,
+        detail: { filter: target.value }
+      });
+      target.dispatchEvent(event);
+    })
+  });
+</script>
+
+<style>
+  nav {
+    padding: 30px 0;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  label {
+    display: block;
+    padding: 12px 22px;
+    border-radius: 16px;
+    background-color: #fff;
+    color: #777;
+    font-size: medium;
+    font-weight: bold;
+    border: 1px solid #f1f1f1;
+    cursor: pointer;
+  }
+
+  input {
+    width: 0;
+    position: absolute;
+  }
+
+  input:checked + label {
+    background-color: #303030;
+    color: #fff;
+  }
+</style>

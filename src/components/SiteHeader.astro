@@ -1,0 +1,63 @@
+---
+interface Props {
+  showBackButton?: boolean;
+}
+
+const { showBackButton = true } = Astro.props;
+---
+
+<header>
+  <nav aria-label="Navegació principal" class={showBackButton ? "" : "home"}>
+    {
+      showBackButton && (
+        <a href="/" class="back" aria-label="Tornar a l'inici">
+          <svg
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+          Back
+        </a>
+      )
+    }
+    <a href="/" class="logo">receptari</a>
+  </nav>
+</header>
+
+<style>
+  header {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 20px;
+  }
+
+  nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+  }
+
+  nav.home {
+    grid-template-columns: 1fr;
+    justify-self: center;
+  }
+
+  .back {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    font-family: monospace;
+  }
+
+  .logo {
+    font-family: monospace;
+    font-size: xx-large;
+    font-weight: bold;
+  }
+</style>
