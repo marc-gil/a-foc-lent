@@ -1,11 +1,47 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import RecipeSearch from "../components/home/RecipeSearch.astro";
+import RecipeCard from "../components/home/RecipeCard.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const recipes = await getCollection("recipes");
+
+const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="All recipes" showBackButton={false}>
+  <main>
+    <header>
+      <h1>Totes les receptes</h1>
+    </header>
+
+    <RecipeSearch filters={filters} />
+
+    <ul>
+      {
+        recipes.map((recipe) => (
+          <li>
+            <RecipeCard recipe={recipe} />
+          </li>
+        ))
+      }
+    </ul>
+  </main>
 </Layout>
+
+<style>
+  main {
+    padding: 48px;
+    padding-top: 0px;
+  }
+
+  header {
+    margin-bottom: 32px;
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+</style>

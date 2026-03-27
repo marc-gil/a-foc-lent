@@ -1,0 +1,57 @@
+---
+import SearchIcon from "../icons/Search.astro";
+---
+
+<label for="recipe-search" class="visually-hidden">Search recipes</label>
+<div class="search-box">
+  <SearchIcon />
+  <input id="recipe-search" type="search" placeholder="Busca aqui..." />
+</div>
+
+<script>
+  const searchInput = document.getElementById("recipe-search");
+  searchInput?.addEventListener("input", (e) => {
+    const target = e.target as HTMLInputElement;
+    console.log("Filtering " + target.value)
+    target.dispatchEvent(
+      new CustomEvent("search-input-changed", {
+        bubbles: true,
+        detail: {
+          search: target.value,
+        },
+      }),
+    );
+  });
+</script>
+
+<style>
+  input {
+    margin-left: 4px;
+    padding: 8px;
+    border: none;
+    width: 100%;
+    outline: none;
+    font-size: large;
+  }
+
+  .search-box {
+    padding: 8px 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

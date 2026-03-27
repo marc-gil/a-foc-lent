@@ -1,23 +1,119 @@
+---
+import PageHeader from "../components/SiteHeader.astro";
+
+interface Props {
+	title: string;
+	showBackButton?: boolean;
+}
+
+const { title, showBackButton = true } = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="ca">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
 	</head>
 	<body>
-		<slot />
+		<PageHeader showBackButton={showBackButton} />
+		<div class="app-container">
+			<slot />
+		</div>
 	</body>
 </html>
 
-<style>
-	html,
-	body {
+<style is:global>
+	:root {
+		--bg-color: #f7f7f7;
+		--text-main: #1c241e;
+	}
+
+	*,
+	*::after,
+	*::before {
+		box-sizing: border-box;
 		margin: 0;
+		padding: 0;
+	}
+
+	body {
+		font-family: "Plus Jakarta Sans", sans-serif;
+		background-color: var(--bg-color);
+		color: var(--text-main);
+		-webkit-font-smoothing: antialiased;
+	}
+
+	ul {
+		list-style: none;
+	}
+
+	a {
+		text-decoration: none;
+		color: inherit;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	button {
+		font-family: inherit;
+		cursor: pointer;
+		border: none;
+		background: none;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	fieldset {
+		border: none;
+	}
+
+	[data-category="Ramen"] {
+		background-color: rgb(243, 156, 18, 53%);
+	}
+
+	[data-category="Beguda"] {
+		background-color: rgba(97, 189, 250, 0.53);
+	}
+
+	[data-category="Pasta"] {
+		background-color: rgba(250, 217, 97, 0.53);
+	}
+
+	[data-category="Carn"] {
+		background-color: rgba(192, 57, 43, 0.53);
+	}
+
+	[data-category="Postre"] {
+		background-color: rgba(169, 113, 75, 0.53);
+	}
+
+	[data-difficulty="Facil"] {
+		background-color: rgba(119, 253, 143, 0.631);
+	}
+
+	[data-difficulty="Intermedi"] {
+		background-color: rgba(247, 220, 111, 0.649);
+	}
+
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		white-space: nowrap;
+		border: 0;
+	}
+</style>
+
+<style>
+	.app-container {
 		width: 100%;
-		height: 100%;
+		max-width: 1200px;
+		margin: 0 auto;
+		min-height: 100vh;
+		position: relative;
 	}
 </style>

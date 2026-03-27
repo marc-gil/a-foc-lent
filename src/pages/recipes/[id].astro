@@ -1,0 +1,188 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import ClockIcon from "../../components/home/ClockIcon.astro";
+import { formatDuration } from "../../lib/duration";
+
+export async function getStaticPaths() {
+  const recipe = await getCollection("recipes");
+  return recipe.map((recipe) => ({
+    params: { id: recipe.id },
+    props: { recipe },
+  }));
+}
+
+const { recipe } = Astro.props;
+const recipeData = recipe.data;
+---
+
+<Layout title={recipeData.title}>
+  <main>
+    <article>
+      <header>
+        <div class="hero">
+          <span class="category" data-category={recipeData.category}>
+            {recipeData.category}
+          </span>
+
+          <h1>{recipeData.title}</h1>
+
+          <dl>
+            <dt class="visually-hidden">Dificultat</dt>
+            <dd data-difficulty={recipeData.difficulty} class="difficulty">
+              {recipeData.difficulty}
+            </dd>
+            <dt class="visually-hidden">Durada</dt>
+            <dd>
+              <time datetime={recipeData.duration}>
+                <ClockIcon aria-hidden="true" focusable="false" />
+                {formatDuration(recipeData.duration)}
+              </time>
+            </dd>
+          </dl>
+        </div>
+
+        <img src={recipeData.heroImage?.src} alt={recipeData.title} />
+      </header>
+      <hr />
+      <div class="recipe">
+        <section class="ingredients">
+          <h2>Ingredients</h2>
+          <ul>
+            {recipeData.ingredients?.map((ingredient) => <li>{ingredient}</li>)}
+          </ul>
+        </section>
+        <section class="steps">
+          <h2 class="margin-left">Instruccions</h2>
+          <ol>
+            {
+              recipeData.steps?.map((step) => (
+                <li>
+                  <p>{step}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  nav {
+    padding-top: 40px;
+    padding-left: 40px;
+  }
+
+  h1 {
+    font-size: xxx-large;
+  }
+
+  header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    padding: 24px;
+    gap: 24px;
+  }
+
+  dl {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+  }
+
+  dd {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  img {
+    border-radius: 32px;
+    max-width: 760px;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+  }
+
+  h2 {
+    margin: 8px 0 16px 0;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  p {
+    max-width: 75ch;
+    line-height: 2;
+    white-space: pre-line;
+  }
+
+  ol > li {
+    margin-bottom: 12px;
+  }
+
+  .category {
+    width: fit-content;
+    padding: 8px 16px;
+    border-radius: 16px;
+    color: #444;
+    font-size: small;
+    top: 24px;
+    right: 24px;
+  }
+
+  .difficulty {
+    width: fit-content;
+    padding: 8px 16px;
+    border-radius: 16px;
+    font-size: small;
+    color: #444;
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    justify-content: center;
+  }
+
+  .recipe {
+    display: flex;
+    flex-direction: row;
+    padding: 24px;
+    padding-top: 48px;
+  }
+
+  .recipe section:first-child {
+    flex: 1 1 0;
+    margin-right: 48px;
+  }
+
+  .recipe section:last-child {
+    flex: 2 1 0;
+  }
+
+  .margin-left {
+    margin-left: -18px;
+  }
+
+  .ingredients {
+    padding: 32px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: rgba(35, 40, 42, 0.08) 0px 1px 3px 1px;
+  }
+
+  .steps {
+    padding: 0 32px;
+  }
+</style>
