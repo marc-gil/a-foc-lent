@@ -70,13 +70,14 @@ const recipeData = recipe.data;
 </Layout>
 
 <style>
-  nav {
-    padding-top: 40px;
-    padding-left: 40px;
-  }
-
   h1 {
     font-size: xxx-large;
+
+    @media (width <= 850px) {
+      order: 1;
+      width: 100%;
+      text-align: center;
+    }
   }
 
   header {
@@ -86,12 +87,24 @@ const recipeData = recipe.data;
     margin-bottom: 40px;
     padding: 24px;
     gap: 24px;
+
+    @media (width <= 850px) {
+      flex-direction: column;
+      margin-bottom: 0px;
+    }
   }
 
   dl {
     display: flex;
     flex-direction: row;
     gap: 32px;
+
+    @media (width <= 850px) {
+      order: 3;
+      margin: 0;
+      display: flex;
+      gap: 0.75rem;
+    }
   }
 
   dd {
@@ -103,11 +116,19 @@ const recipeData = recipe.data;
   img {
     border-radius: 32px;
     max-width: 760px;
+
+    @media (width <= 850px) {
+      order: 1;
+    }
   }
 
   hr {
     border: 0;
     border-top: 1px solid #ccc;
+
+    @media (width <= 850px) {
+      border: none;
+    }
   }
 
   h2 {
@@ -126,6 +147,10 @@ const recipeData = recipe.data;
     white-space: pre-line;
   }
 
+  ol {
+    padding-left: 18px;
+  }
+
   ol > li {
     margin-bottom: 12px;
   }
@@ -136,8 +161,10 @@ const recipeData = recipe.data;
     border-radius: 16px;
     color: #444;
     font-size: small;
-    top: 24px;
-    right: 24px;
+
+    @media (width <= 850px) {
+      order: 2;
+    }
   }
 
   .difficulty {
@@ -153,6 +180,14 @@ const recipeData = recipe.data;
     flex-direction: column;
     gap: 24px;
     justify-content: center;
+
+    @media (width <= 850px) {
+      flex-direction: row;
+      order: 2;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
   }
 
   .recipe {
@@ -160,19 +195,24 @@ const recipeData = recipe.data;
     flex-direction: row;
     padding: 24px;
     padding-top: 48px;
+
+    @media (width <= 850px) {
+      padding-top: 12px;
+      flex-direction: column;
+    }
   }
 
   .recipe section:first-child {
     flex: 1 1 0;
-    margin-right: 48px;
+    margin-right: 30px;
+    @media (width <= 850px) {
+      margin-right: 0px;
+      margin-bottom: 24px;
+    }
   }
 
   .recipe section:last-child {
     flex: 2 1 0;
-  }
-
-  .margin-left {
-    margin-left: -18px;
   }
 
   .ingredients {
