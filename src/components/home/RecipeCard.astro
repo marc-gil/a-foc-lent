@@ -21,7 +21,9 @@ const { data: recipeData } = Astro.props.recipe;
   </figure>
 
   <h2>
-    <a href={`/a-foc-lent/recipes/${Astro.props.recipe.id}`}>{recipeData.title}</a>
+    <a href={`/a-foc-lent/recipes/${Astro.props.recipe.id}`}>
+      {recipeData.title}
+    </a>
   </h2>
   {
     recipeData.tags && (
@@ -87,15 +89,32 @@ const { data: recipeData } = Astro.props.recipe;
     padding: 24px;
     border-radius: 16px;
     background-color: #fff;
+
+    @media (width <= 850px) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 12px;
+      row-gap: 8px;
+      align-items: center;
+      padding: 12px 18px;
+    }
   }
 
   img {
     height: 160px;
+
+    @media (width <= 850px) {
+      height: 40px;
+    }
   }
 
   h2 {
     margin-bottom: 18px;
-    position: static;
+
+    @media (width <= 850px) {
+      margin-bottom: 0px;
+      font-size: large;
+    }
   }
 
   h2 a::after {
@@ -107,12 +126,22 @@ const { data: recipeData } = Astro.props.recipe;
   hr {
     border: 0;
     border-top: 1px solid #ccc;
+
+    @media (width <= 850px) {
+      width: 100%;
+    }
   }
 
   footer {
     margin-top: 12px;
     display: flex;
     justify-content: space-between;
+
+    @media (width <= 850px) {
+      gap: 12px;
+      margin-top: 0px;
+      order: 3;
+    }
   }
 
   time {
@@ -124,10 +153,12 @@ const { data: recipeData } = Astro.props.recipe;
   figure {
     display: flex;
     flex-direction: row;
-    gap: 24px;
     justify-content: center;
     margin-bottom: 8px;
-    align-items: center;
+
+    @media (width <= 850px) {
+      margin-bottom: 0px;
+    }
   }
 
   .category {
@@ -139,6 +170,11 @@ const { data: recipeData } = Astro.props.recipe;
     font-size: small;
     top: 24px;
     right: 24px;
+
+    @media (width <= 850px) {
+      position: static;
+      order: 2;
+    }
   }
 
   .difficulty {
