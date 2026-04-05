@@ -48,12 +48,17 @@ const {filters} = Astro.props;
 <style>
   nav {
     padding: 30px 0;
+    overflow-x: auto;
   }
 
   ul {
     display: flex;
     flex-direction: row;
     gap: 8px;
+  }
+
+  nav::-webkit-scrollbar {
+    display: none;
   }
 
   label {
