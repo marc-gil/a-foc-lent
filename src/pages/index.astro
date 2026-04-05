@@ -9,10 +9,10 @@ const recipes = await getCollection("recipes");
 const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
 ---
 
-<Layout title="All recipes" showBackButton={false}>
+<Layout title="El meu receptari personal" showBackButton={false}>
   <main>
     <header>
-      <h1>Totes les receptes</h1>
+      <h1>Receptari personal</h1>
     </header>
 
     <RecipeSearch filters={filters} />
@@ -33,6 +33,10 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
   main {
     padding: 48px;
     padding-top: 0px;
+
+    @media (width <= 850px) {
+      padding: 24px;
+    }
   }
 
   header {
