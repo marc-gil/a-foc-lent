@@ -1,46 +1,18 @@
-# Astro Starter Kit: Basics
+# El meu receptari personal
 
-```sh
-bun create astro@latest -- --template basics
-```
+Aquest és un lloc web personal amb les meves receptes preferides. Està dissenyat per ser pràctic i fàcil de consultar, tant des de l'ordinador com des del mòbil.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Què hi trobaràs
 
-## 🚀 Project Structure
+- Receptes ordenades per categories
+- Ingredients i instruccions pas a pas
+- Temps de preparació, dificultat i valoració
+- Imatges de cada plat
 
-Inside of your Astro project, you'll see the following folders and files:
+## Com s'utilitza
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+Entra a la [pàgina principal](https://marc-gil.github.io/a-foc-lent/), navega per les receptes o fes servir els filtres per trobar allò que busques. Cada recepta té la seva pròpia pàgina amb tots els detalls.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Tecnologia
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Aquest lloc està construït amb [Astro](https://astro.build) i allotjat de manera estàtica a [Github Pages](https://docs.github.com/pages).
