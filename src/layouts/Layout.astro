@@ -1,5 +1,5 @@
 ---
-import PageHeader from "../components/SiteHeader.astro";
+import SiteHeader from "../components/SiteHeader.astro";
 
 interface Props {
 	title: string;
@@ -14,11 +14,11 @@ const { title, showBackButton = true } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" href="/a-foc-lent/favicon.ico" />
 		<title>{title}</title>
 	</head>
 	<body>
-		<PageHeader showBackButton={showBackButton} />
+		<SiteHeader showBackButton={showBackButton} />
 		<div class="app-container">
 			<slot />
 		</div>
