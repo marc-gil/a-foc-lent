@@ -12,7 +12,7 @@ import SearchIcon from "../icons/Search.astro";
   const searchInput = document.getElementById("recipe-search");
   searchInput?.addEventListener("input", (e) => {
     const target = e.target as HTMLInputElement;
-    console.log("Filtering " + target.value)
+    console.log("Filtering " + target.value);
     target.dispatchEvent(
       new CustomEvent("search-input-changed", {
         bubbles: true,
@@ -32,6 +32,10 @@ import SearchIcon from "../icons/Search.astro";
     width: 100%;
     outline: none;
     font-size: large;
+  }
+
+  input[type="text"] {
+    -webkit-appearance: none;
   }
 
   .search-box {
