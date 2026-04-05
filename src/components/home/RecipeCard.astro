@@ -45,7 +45,7 @@ const { data: recipeData } = Astro.props.recipe;
 </article>
 
 <script>
-  let selectedCategory: string;
+  let selectedCategory: string = "";
   let searchInput: string = "";
   const recipeCards = document.querySelectorAll("article");
   document.addEventListener("filter-changed", (e) => {
