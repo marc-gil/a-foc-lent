@@ -12,6 +12,7 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
 <Layout title="El meu receptari personal" showBackButton={false}>
   <main>
     <header>
+      <span>Benvingut al meu</span>
       <h1>Receptari personal</h1>
     </header>
 
@@ -32,7 +33,7 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
 <style>
   main {
     padding: 48px;
-    padding-top: 0px;
+    padding-top: 24px;
 
     @media (width <= 850px) {
       padding: 24px;
@@ -40,7 +41,14 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
   }
 
   header {
-    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 42px;
+  }
+
+  header span {
+    color: #5f5e5e;
   }
 
   ul {
