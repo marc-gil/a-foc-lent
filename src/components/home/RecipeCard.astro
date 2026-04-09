@@ -56,7 +56,7 @@ const { data: recipeData } = Astro.props.recipe;
 
   function applyFilters(recipeCard: HTMLElement) {
     const liElement = recipeCard.parentElement!;
-    const catageorySpan = recipeCard!.firstElementChild as HTMLElement;
+    const catageorySpan = recipeCard!.querySelector("[data-category]") as HTMLElement;
 
     const title = Array.from(recipeCard.children)
       .filter((child) => child.tagName == "H2")[0]
@@ -121,7 +121,6 @@ const { data: recipeData } = Astro.props.recipe;
     @media (width <= 850px) {
       grid-column: 2;
       grid-row: 2;
-      width: 100%;
       align-self: center;
     }
   }
@@ -184,7 +183,6 @@ const { data: recipeData } = Astro.props.recipe;
     color: #444;
 
     media (width <= 850px) {
-      position: static;
       padding: 8px 12px;
     }
   }
