@@ -137,6 +137,7 @@ const { data: recipeData } = Astro.props.recipe;
       gap: 8px;
       justify-content: flex-start;
       align-self: center;
+      align-items: center;
     }
   }
 
@@ -144,6 +145,10 @@ const { data: recipeData } = Astro.props.recipe;
     display: flex;
     gap: 4px;
     align-items: center;
+
+    @media (width <= 850px) {
+      font-size: 14px;
+    }
   }
 
   figure {
