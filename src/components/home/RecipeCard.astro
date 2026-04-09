@@ -11,10 +11,6 @@ const { data: recipeData } = Astro.props.recipe;
 ---
 
 <article>
-  <span class="category" data-category={recipeData.category}>
-    {recipeData.category}
-  </span>
-
   <figure>
     <img src={recipeData.thumbnail.src} alt={recipeData.title} />
     <figcaption class="visually-hidden">{recipeData.title}</figcaption>
@@ -25,17 +21,11 @@ const { data: recipeData } = Astro.props.recipe;
       {recipeData.title}
     </a>
   </h2>
-  {
-    recipeData.tags && (
-      <ul aria-label="Etiquetes">
-        {recipeData.tags.map((tag) => (
-          <li>{tag}</li>
-        ))}
-      </ul>
-    )
-  }
   <hr />
   <footer>
+    <span class="category" data-category={recipeData.category}>
+      {recipeData.category}
+    </span>
     <span data-difficulty={recipeData.difficulty} class="difficulty">
       {recipeData.difficulty}
     </span>
@@ -66,7 +56,7 @@ const { data: recipeData } = Astro.props.recipe;
 
   function applyFilters(recipeCard: HTMLElement) {
     const liElement = recipeCard.parentElement!;
-    const catageorySpan = recipeCard!.firstElementChild as HTMLElement;
+    const catageorySpan = recipeCard!.querySelector("[data-category]") as HTMLElement;
 
     const title = Array.from(recipeCard.children)
       .filter((child) => child.tagName == "H2")[0]
@@ -91,11 +81,9 @@ const { data: recipeData } = Astro.props.recipe;
     background-color: #fff;
 
     @media (width <= 850px) {
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 12px;
-      row-gap: 8px;
-      align-items: center;
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      column-gap: 12px;
       padding: 12px 18px;
     }
   }
@@ -104,7 +92,7 @@ const { data: recipeData } = Astro.props.recipe;
     height: 160px;
 
     @media (width <= 850px) {
-      height: 40px;
+      height: 80px;
     }
   }
 
@@ -112,8 +100,11 @@ const { data: recipeData } = Astro.props.recipe;
     margin-bottom: 18px;
 
     @media (width <= 850px) {
-      margin-bottom: 0px;
-      font-size: large;
+      grid-column: 2;
+      grid-row: 1;
+      margin-bottom: 0;
+      font-size: 18px;
+      align-self: center;
     }
   }
 
@@ -128,7 +119,9 @@ const { data: recipeData } = Astro.props.recipe;
     border-top: 1px solid #ccc;
 
     @media (width <= 850px) {
-      width: 100%;
+      grid-column: 2;
+      grid-row: 2;
+      align-self: center;
     }
   }
 
@@ -138,9 +131,12 @@ const { data: recipeData } = Astro.props.recipe;
     justify-content: space-between;
 
     @media (width <= 850px) {
-      gap: 12px;
-      margin-top: 0px;
-      order: 3;
+      grid-column: 2;
+      grid-row: 3;
+      margin-top: 0;
+      gap: 8px;
+      justify-content: flex-start;
+      align-self: center;
     }
   }
 
@@ -157,7 +153,9 @@ const { data: recipeData } = Astro.props.recipe;
     margin-bottom: 8px;
 
     @media (width <= 850px) {
-      margin-bottom: 0px;
+      grid-column: 1;
+      grid-row: 1 / 4;
+      margin-bottom: 0;
     }
   }
 
@@ -173,7 +171,7 @@ const { data: recipeData } = Astro.props.recipe;
 
     @media (width <= 850px) {
       position: static;
-      order: 2;
+      padding: 8px 12px;
     }
   }
 
@@ -183,5 +181,9 @@ const { data: recipeData } = Astro.props.recipe;
     border-radius: 16px;
     font-size: small;
     color: #444;
+
+    media (width <= 850px) {
+      padding: 8px 12px;
+    }
   }
 </style>
