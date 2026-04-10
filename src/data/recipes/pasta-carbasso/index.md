@@ -7,12 +7,12 @@ difficulty: Facil
 thumbnail: ./pasta-carbasso.webp
 heroImage: ./pasta-carbasso-real.webp
 ingredients:
-  - 100g de pasta (100g per persona)
-  - 1 carbassó (1 per persona)
-  - Parmesà
-  - Oli d'oliva
-  - Perbre
-  - Sal
+- { quantity: "100g", ingredient: "Pasta", comments: "100g per persona" }
+- { quantity: "1", ingredient: "Carbassó", comments: "1 per persona" }
+- { ingredient: "Parmesà" }
+- { ingredient: "Oli d'oliva" }
+- { ingredient: "Pebre" }
+- { ingredient: "Sal" }
 steps:
   - Pela els carbassons i ratllals a tires petites amb un ratllador de formatge.
   - En una paella escalfa oli i sofregeix el carbasso durant uns 30-40 min fins que quedi una pasta homogenea i el color sigui tirant a gronguenc pero no marrò.

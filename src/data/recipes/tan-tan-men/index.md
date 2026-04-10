@@ -8,23 +8,23 @@ difficulty: Facil
 thumbnail: ./tan-tan.webp
 heroImage: ./tan-tan-men-real.webp
 ingredients:
-    - Caldo de pollastre (pot ser de pot)
-        - 2 Carcasses de pollastre
-        - Xalotes
-        - "Cebolleta" xina
-    - 2 cullerades de pasta de sesam xina (mes torrada que el tahine, susbstituir per crema de cacahuet sino)
-    - 30 ml salsa de soja
-    - 5 ml de vinagre d’arros
-    - Sucre
-    - Oli de xiles
-    - 250g de carn de porc picada
-    - 4cm de gingebre
-    - 15ml de mirin
-    - 2 cullerades de Toban Djan (Chili bean sauce)
-    - All picat
-    - 0,5L de llet de soja o d’avena
-    - Espinacs o bob choi
-    - Noodles alcalins (carbonato de sodio E500i)
+    - { ingredient: "Caldo de pollastre", comments: "pot ser de pot" }
+    - { quantity: "2", ingredient: "Carcasses de pollastre", comments: "per al caldo" }
+    - { ingredient: "Xalotes", comments: "per al caldo" }
+    - { ingredient: "Cebolleta xina", comments: "per al caldo" }
+    - { quantity: "2 cda", ingredient: "Pasta de sesam xina", comments: "mes torrada que el tahine, substituir per crema de cacahuet sino" }
+    - { quantity: "30 ml", ingredient: "Salsa de soja" }
+    - { quantity: "5 ml", ingredient: "Vinagre d'arros" }
+    - { ingredient: "Sucre" }
+    - { ingredient: "Oli de xiles" }
+    - { quantity: "250g de", ingredient: "Carn de porc picada" }
+    - { quantity: "4cm", ingredient: "Gingebre" }
+    - { quantity: "15ml", ingredient: "Mirin" }
+    - { quantity: "2 cda", ingredient: "Toban Djan", comments: "Chili bean sauce" }
+    - { ingredient: "All picat" }
+    - { quantity: "0,5L", ingredient: "Llet de soja o d'avena" }
+    - { ingredient: "Espinacs o bob choi" }
+    - { ingredient: "Noodles alcalins", comments: "carbonato de sodio E500i" }
 steps:
     - "Prepara el brou ràpid (si no en tens de comprat):\n
     Daura les carcasses de pollastre en una olla. Afegeix les verdures que tinguis (porro, pastanaga, ceba...) i cobreix amb aigua. Bull a foc fort durant 30 minuts per obtenir una base umami. Cola el brou."

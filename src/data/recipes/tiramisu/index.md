@@ -7,13 +7,13 @@ difficulty: Intermedi
 thumbnail: ./tiramisu.webp
 heroImage: ./tiramisu-real.webp
 ingredients:
-  - Ous 3 (3 rovells i 2 clares)
-  - Mascarpone (250g)
-  - Sucre (70g)
-  - Melindros (150g)
-  - Cacau (10g)
-  - Cafe (75ml)
-  - Sal
+  - { quantity: "3", ingredient: "Ous", comments: "3 rovells i 2 clares" }
+  - { quantity: "250g", ingredient: "Mascarpone" }
+  - { quantity: "70g", ingredient: "Sucre" }
+  - { quantity: "150g", ingredient: "Melindros" }
+  - { quantity: "10g", ingredient: "Cacau" }
+  - { quantity: "75ml", ingredient: "Cafe" }
+  - { ingredient: "Sal" }
 steps:
   - Escalfem aigua en una cassola gran, ha d'estar calenta però sense arribar a bullir. Mentre s'escalfa l'aigua anem separant els rovells de les clares i apartem en una tassa. Les clares les muntarem i posteriorment, reservem.
   - Els ous han de ser frescos i cal manipular-los a temperatura ambient. Barregem el sucre, en un bol metàl·lic, amb tots els rovells. Comencem batent al bol fora de l'aigua i quan comenci a escumar introduïm el bol a la cassola amb l'aigua calenta.

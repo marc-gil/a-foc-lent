@@ -7,17 +7,17 @@ difficulty: Facil
 thumbnail: ./taco-big-mac.webp
 heroImage: ./taco-big-mac-real.webp
 ingredients: 
-  - 1 Ceba dolça
-  - 60g de maionesa (kiwpie si n'hi ha)
-  - 20g de ketchup
-  - 20g de mostassa americana
-  - Cogombres encurtits
-  - 1 culleradeta de glutamat monosodic (opcional)
-  - Culleradeta de vinagre d'arros si es fa servir maionesa normal
-  - 300-400g de carn de vedella
-  - 8 tortilles petits (a ser possibles de blat moro)
-  - Formatge per fondre (Lamines de cheddar per exemple)
-  - Enciam Iceberg
+- { quantity: "1", ingredient: "Ceba dolça" }
+- { quantity: "60g", ingredient: "Maionesa", comments: "kiwpie si n'hi ha" }
+- { quantity: "20g", ingredient: "Ketchup" }
+- { quantity: "20g", ingredient: "Mostassa americana" }
+- { ingredient: "Cogombres encurtits" }
+- { quantity: "1 cdeta", ingredient: "Glutamat monosodic", comments: "opcional" }
+- { quantity: "1 cdeta", ingredient: "Vinagre d'arros", comments: "si es fa servir maionesa normal" }
+- { quantity: "300-400g", ingredient: "Carn de vedella" }
+- { quantity: "8", ingredient: "Tortilles petits", comments: "a ser possibles de blat moro" }
+- { ingredient: "Formatge per fondre", comments: "Lamines de cheddar per exemple" }
+- { ingredient: "Enciam Iceberg" }
 
 steps:
   - Tallar la ceba a daus i sofregir a foc suau amb oli i mantega i afegir sal per a que sui durant uns 20-30 mins fins que estigui caramelitzada.

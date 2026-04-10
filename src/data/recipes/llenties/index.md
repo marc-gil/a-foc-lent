@@ -8,16 +8,16 @@ thumbnail: ./llenties.webp
 heroImage: ./llenties-real.webp
 portions: 4
 ingredients:
-  - 320g de llenties (80g per persona)
-  - 1 pebrot verd
-  - 1 ceba 
-  - 1 o 2 pastanagues
-  - 2 o 3 tomaquets madurs
-  - 2 xoriços tous (no embutit)
-  - 1 o 2 fulla/es de llorer
-  - 1L de caldo de pollsatre o verdures
-  - Oli
-  - Sal
+  - { quantity: 320g, ingredient: Llenties, comments: 80g per persona }
+  - { quantity: '1', ingredient: Pebrot verd }
+  - { quantity: '1', ingredient: Ceba }
+  - { quantity: 1 o 2, ingredient: Pastanagues }
+  - { quantity: 2 o 3, ingredient: Tomaquets madurs }
+  - { quantity: '2', ingredient: Xoriços tous, comments: no embutit }
+  - { quantity: 1 o 2, ingredient: Fulles de llorer }
+  - { quantity: 1L, ingredient: Caldo de pollsatre o verdures }
+  - { ingredient: Oli }
+  - { ingredient: Sal }
 steps:
   - Tallar el pebrot, pastanaga i la ceba a quadradets petits i sofergir durant 20 mins amb una mica d'oli i sal a foc mig/fluix (afegir aigua de tant en tant si veiem que es comença a torrar una mica massa).
   - Tallar el xoriço a quadradets petits i afegir un cop la ceba i el pebrot estiguin prou sofregits.
