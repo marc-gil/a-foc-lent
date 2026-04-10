@@ -28,7 +28,7 @@ const recipeData = recipe.data;
           <h1>{recipeData.title}</h1>
 
           {
-            recipeData.tags && (
+            recipeData.tags && recipeData.tags.length > 0 && (
               <ul aria-label="Etiquetes">
                 {recipeData.tags.map((tag) => (
                   <li>{tag}</li>
@@ -97,6 +97,14 @@ const recipeData = recipe.data;
 </Layout>
 
 <style>
+  article {
+    padding: 24px;
+
+    @media (width <= 850px) {
+      padding: 12px;
+    }
+  }
+
   h1 {
     font-size: xxx-large;
 
@@ -111,13 +119,13 @@ const recipeData = recipe.data;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 40px;
-    padding: 24px;
+    margin-bottom: 60px;
     gap: 24px;
 
     @media (width <= 850px) {
       flex-direction: column;
-      margin-bottom: 0px;
+      margin-bottom: 20px;
+      gap: 12px;
     }
   }
 
@@ -152,6 +160,7 @@ const recipeData = recipe.data;
   hr {
     border: 0;
     border-top: 1px solid #ccc;
+    margin: 0 -24px;
 
     @media (width <= 850px) {
       border: none;
@@ -186,6 +195,12 @@ const recipeData = recipe.data;
     display: grid;
     column-gap: 12px;
     grid-template-columns: 2fr 5fr;
+  }
+
+  .ingredients h2 {
+    @media (width <= 850px) {
+      padding-left: 8px;
+    }
   }
 
   .quantity {
@@ -236,11 +251,10 @@ const recipeData = recipe.data;
   .recipe {
     display: flex;
     flex-direction: row;
-    padding: 24px;
-    padding-top: 48px;
+    margin-top: 60px;
 
     @media (width <= 850px) {
-      padding-top: 12px;
+      margin-top: 12px;
       flex-direction: column;
     }
   }
@@ -263,9 +277,17 @@ const recipeData = recipe.data;
     background-color: #fff;
     border-radius: 16px;
     box-shadow: rgba(35, 40, 42, 0.08) 0px 1px 3px 1px;
+
+    @media (width <= 850px) {
+      padding: 12px;
+    }
   }
 
   .steps {
     padding: 0 32px;
+
+    @media (width <= 850px) {
+      padding: 0;
+    }
   }
 </style>
