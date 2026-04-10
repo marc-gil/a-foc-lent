@@ -27,6 +27,15 @@ const recipeData = recipe.data;
 
           <h1>{recipeData.title}</h1>
 
+          {
+            recipeData.tags && (
+              <ul aria-label="Etiquetes">
+                {recipeData.tags.map((tag) => (
+                  <li>{tag}</li>
+                ))}
+              </ul>
+            )
+          }
           <dl>
             <dt class="visually-hidden">Dificultat</dt>
             <dd data-difficulty={recipeData.difficulty} class="difficulty">
@@ -49,7 +58,25 @@ const recipeData = recipe.data;
         <section class="ingredients">
           <h2>Ingredients</h2>
           <ul>
-            {recipeData.ingredients?.map((ingredient) => <li>{ingredient}</li>)}
+            {
+              recipeData.ingredients?.map((ingredient) => {
+                if (typeof ingredient === "string") {
+                  return <li>{ingredient}</li>;
+                } else {
+                  return (
+                    <li>
+                      <span class="quantity">{ingredient.quantity}</span>
+                      <span class="ingredient-name">
+                        {ingredient.ingredient}
+                        {ingredient.comments && (
+                          <span class="comment">{`(${ingredient.comments})`}</span>
+                        )}
+                      </span>
+                    </li>
+                  );
+                }
+              })
+            }
           </ul>
         </section>
         <section class="steps">
@@ -132,7 +159,7 @@ const recipeData = recipe.data;
   }
 
   h2 {
-    margin: 8px 0 16px 0;
+    margin: 0px 0 16px 0;
   }
 
   ul {
@@ -153,6 +180,22 @@ const recipeData = recipe.data;
 
   ol > li {
     margin-bottom: 12px;
+  }
+
+  .ingredients li {
+    display: grid;
+    column-gap: 12px;
+    grid-template-columns: 2fr 5fr;
+  }
+
+  .quantity {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .comment {
+    font-size: 14px;
+    color: rgb(115, 114, 108);
   }
 
   .category {

@@ -7,12 +7,12 @@ difficulty: Facil
 thumbnail: ./pasta-carbonara.webp
 heroImage: ./pasta-carbonara-real.webp
 ingredients:
-  - Pasta (100g per persona)
-  - Guanciale / Bacon (1 paquet cada dos persones aprox)
-  - Pecorino romano / Parmigiano reggiano
-  - 2-3 ous per persona
-  - Perbre
-  - Sal
+- { quantity: "100g", ingredient: "Pasta" , comments: "100g per persona" }
+- { quantity: "1/2 paquet", ingredient: "Guanciale / Bacon", comments: "1 paquet cada dos persones aprox" }
+- { ingredient: "Pecorino romano / Parmigiano reggiano", comments: "Al gust" }
+- { quantity: "3", ingredient: "Clares d'ou", comments: "2/3 ous per persona"}
+- { ingredient: "Perbre" }
+- { ingredient: "Sal" }
 steps:
   - Posa en una olla aigua a bullir i quan ho faci afegeix sal i cou la pasta. Un cop cuita la pasta reserva l’aigua de la coccio.
   - Talla a cuadrats petits el guanciale i posal a daurar en una paella a foc mig. Un cop cuit reserva el guanciale i deixa el greix a la paella.

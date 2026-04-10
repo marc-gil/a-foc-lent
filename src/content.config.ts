@@ -15,7 +15,11 @@ const recipeSchema = ({ image }: SchemaContext) => z.object({
   wantToDo: z.boolean().optional().default(false),
   thumbnail: image(),
   heroImage: image(),
-  ingredients: z.array(z.string()),
+  ingredients: z.array(z.object({
+    ingredient: z.string(),
+    quantity: z.string().optional(),
+    comments: z.string().optional()
+  })),
   steps: z.array(z.string())
 });
 
