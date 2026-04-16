@@ -51,7 +51,12 @@ const recipeData = recipe.data;
           </dl>
         </div>
 
-        <img src={recipeData.heroImage?.src} alt={recipeData.title} />
+        <img
+          src={recipeData.heroImage?.src}
+          alt={recipeData.title}
+          width={recipeData.heroImage?.width}
+          height={recipeData.heroImage?.height}
+        />
       </header>
       <hr />
       <div class="recipe">
@@ -149,6 +154,8 @@ const recipeData = recipe.data;
   }
 
   img {
+    width: 100%;
+    height: auto;
     border-radius: 32px;
     max-width: 760px;
 
@@ -186,7 +193,7 @@ const recipeData = recipe.data;
   ol {
     padding-left: 18px;
 
-    @supports (-webkit-touch-callout: none) or (--webkit-hyphens: none){
+    @supports (-webkit-touch-callout: none) or (--webkit-hyphens: none) {
       /* CSS specific to iOS devices */
       padding-left: 22px;
     }
@@ -199,7 +206,7 @@ const recipeData = recipe.data;
   .ingredients li {
     display: grid;
     column-gap: 12px;
-    grid-template-columns: 2fr 5fr;
+    grid-template-columns: 1fr 2fr;
   }
 
   .ingredients h2 {
