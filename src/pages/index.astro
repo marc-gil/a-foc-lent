@@ -45,6 +45,10 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
     flex-direction: column;
     gap: 8px;
     margin-bottom: 42px;
+
+    @media (width <= 850px) {
+      margin-bottom: 32px;
+    }
   }
 
   header span {
