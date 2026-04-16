@@ -37,6 +37,7 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
 
     @media (width <= 850px) {
       padding: 24px;
+      padding-top: 12px;
     }
   }
 
@@ -47,7 +48,7 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
     margin-bottom: 42px;
 
     @media (width <= 850px) {
-      margin-bottom: 32px;
+      margin-bottom: 22px;
     }
   }
 
@@ -59,5 +60,9 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 24px;
+
+    @media (width <= 850px) {
+      gap: 12px;
+    }
   }
 </style>
