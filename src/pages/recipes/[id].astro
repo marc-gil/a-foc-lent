@@ -29,7 +29,7 @@ const recipeData = recipe.data;
 
           {
             recipeData.tags && recipeData.tags.length > 0 && (
-              <ul aria-label="Etiquetes">
+              <ul aria-label="Etiquetes" style="display: none;">
                 {recipeData.tags.map((tag) => (
                   <li>{tag}</li>
                 ))}
@@ -65,21 +65,17 @@ const recipeData = recipe.data;
           <ul>
             {
               recipeData.ingredients?.map((ingredient) => {
-                if (typeof ingredient === "string") {
-                  return <li>{ingredient}</li>;
-                } else {
-                  return (
-                    <li>
-                      <span class="quantity">{ingredient.quantity}</span>
-                      <span class="ingredient-name">
-                        {ingredient.ingredient}
-                        {ingredient.comments && (
-                          <span class="comment">{`(${ingredient.comments})`}</span>
-                        )}
-                      </span>
-                    </li>
-                  );
-                }
+                return (
+                  <li>
+                    <span class="quantity">{ingredient.quantity}</span>
+                    <span class="ingredient-name">
+                      {ingredient.ingredient}
+                      {ingredient.comments && (
+                        <span class="comment">{`(${ingredient.comments})`}</span>
+                      )}
+                    </span>
+                  </li>
+                );
               })
             }
           </ul>
