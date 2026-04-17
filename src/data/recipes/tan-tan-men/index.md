@@ -44,7 +44,6 @@ steps:
     A la mateixa aigua, bull els noodles de ramen seguint les instruccions del paquet."
 
     - "Monta el bol:\n
-     \n
     Posa el tare en el fons d’un bol gran.\n
     Aboca el brou calent a sobre i remou per integrar.\n
     Afegeix els noodles escorreguts.\n
