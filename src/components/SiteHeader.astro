@@ -52,7 +52,6 @@ const { showBackButton = true } = Astro.props;
     margin: 0 auto;
     padding: 0 20px;
     align-content: center;
-
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
@@ -70,13 +69,12 @@ const { showBackButton = true } = Astro.props;
 
   button {
     justify-self: end;
-
     display: none;
     align-items: center;
-
     border-radius: 8px;
     width: fit-content;
     padding: 8px;
+    -webkit-appearance: none
 
     @media (display-mode: standalone) {
       display: flex;
@@ -86,7 +84,6 @@ const { showBackButton = true } = Astro.props;
   .back {
     display: flex;
     align-items: center;
-
     border-radius: 8px;
     width: fit-content;
     padding: 8px;
