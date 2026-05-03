@@ -8,16 +8,16 @@ thumbnail: ./katsu-curry.webp
 heroImage: ./katsu-curry-real.webp
 servings: 4
 ingredients: 
-  - { quantity: "1L", ingredient: "Brou de pollastre", comments: "Idealment dasi, pero es pot substituir per brou" }
+  - { quantity: "1L", ingredient: "Brou de pollastre", comments: "idealment dasi, pero es pot substituir per brou" }
   - { quantity: "4-6", ingredient: "Shiitake deshidratat" }
   - { quantity: "3", ingredient: "Ceba dolça" }
-  - { quantity: "1", ingredient: "Poma Fuji", comments: "O qualsevol altra varietat, preferiblement amb un toc àcid" }
+  - { quantity: "1", ingredient: "Poma Fuji", comments: "o qualsevol altra varietat, preferiblement amb un toc àcid" }
   - { quantity: "3 cda", ingredient: "Ketchup" }
   - { quantity: "3 porcions", ingredient: "Pastilla de curry japonés" }
   - { quantity: "25ml", ingredient: "Salsa perrins" }
-  - { quantity: "15ml", ingredient: "Salsa de soja fosca", comments: "Substituible per soja normal i una mica de sucre" }
+  - { quantity: "15ml", ingredient: "Salsa de soja fosca", comments: "substituible per soja normal i una mica de sucre" }
   - { quantity: "4", ingredient: "Pots d'arros" }
-  - { quantity: "4", ingredient: "Lloms de porc", comments: "Substituible per xulles" }
+  - { quantity: "4", ingredient: "Lloms de porc", comments: "substituible per xulles" }
   - { quantity: "2", ingredient: "Ou", }
   - { ingredient: "Farina" }
   - { ingredient: "Panko" }
