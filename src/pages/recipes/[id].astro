@@ -307,7 +307,9 @@ const recipeData = recipe.data;
   }
 
   .servings {
-    padding-right: 8px;
+    @media (width <= 850px) {
+      padding-right: 8px;
+    }
   }
 
   .steps {
