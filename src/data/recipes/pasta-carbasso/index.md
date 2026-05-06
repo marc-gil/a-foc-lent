@@ -6,6 +6,7 @@ category: Pasta
 difficulty: Facil
 thumbnail: ./pasta-carbasso.webp
 heroImage: ./pasta-carbasso-real.webp
+servings: 1
 ingredients:
 - { quantity: "100g", ingredient: "Pasta", comments: "100g per persona" }
 - { quantity: "1", ingredient: "Carbassó", comments: "1 per persona" }

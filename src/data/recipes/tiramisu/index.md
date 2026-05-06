@@ -6,6 +6,7 @@ category: Postre
 difficulty: Intermedi
 thumbnail: ./tiramisu.webp
 heroImage: ./tiramisu-real.webp
+servings: 4
 ingredients:
   - { quantity: "3", ingredient: "Ous", comments: "3 rovells i 2 clares" }
   - { quantity: "250g", ingredient: "Mascarpone" }

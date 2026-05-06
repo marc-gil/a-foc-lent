@@ -61,7 +61,14 @@ const recipeData = recipe.data;
       <hr />
       <div class="recipe">
         <section class="ingredients">
-          <h2>Ingredients</h2>
+          <header>
+            <h2>Ingredients</h2>
+            {
+              recipeData.servings && (
+                <span class="servings">{`per a ${recipeData.servings} ${recipeData.servings > 1 ? 'racions' : 'ració'}`}</span>
+              )
+            }
+          </header>
           <ul>
             {
               recipeData.ingredients?.map((ingredient) => {
@@ -117,7 +124,7 @@ const recipeData = recipe.data;
     }
   }
 
-  header {
+  article > header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -289,6 +296,19 @@ const recipeData = recipe.data;
 
     @media (width <= 850px) {
       padding: 12px;
+    }
+  }
+
+  .ingredients header {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 16px;
+    justify-content: space-between;
+  }
+
+  .servings {
+    @media (width <= 850px) {
+      padding-right: 8px;
     }
   }
 

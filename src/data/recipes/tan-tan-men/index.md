@@ -7,6 +7,7 @@ category: Ramen
 difficulty: Facil
 thumbnail: ./tan-tan.webp
 heroImage: ./tan-tan-men-real.webp
+servings: 3
 ingredients:
     - { ingredient: "Caldo de pollastre", comments: "pot ser de pot" }
     - { quantity: "2", ingredient: "Carcasses de pollastre", comments: "per al caldo" }
