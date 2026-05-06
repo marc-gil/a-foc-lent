@@ -6,11 +6,12 @@ category: Beguda
 difficulty: Facil
 thumbnail: ./golden-milk.webp
 heroImage: ./golden-milk-real.webp
+servings: 1
 ingredients: 
   - { quantity: "1 cdeta", ingredient: "Gingebre en pols" }
   - { quantity: "1 cdeta", ingredient: "Curcuma en pols" }
   - { quantity: "1/4 cdeta ", ingredient: "Pebre", comments: "tant si es molt com sencer" }
-  - { quantity: "1 branca o 1/2 cda", ingredient: "Canyella" }
+  - { quantity: "1 branca o 1/2 cdeta", ingredient: "Canyella" }
   - { quantity: "1 cdeta", ingredient: "Mel" }
   - { quantity: "1 tassa", ingredient: "Llet vegetal" }
   - { quantity: "1", ingredient: "Cardamomo verd", comments: "opcional" }

@@ -6,18 +6,19 @@ category: Carn
 difficulty: Facil
 thumbnail: ./taco-big-mac.webp
 heroImage: ./taco-big-mac-real.webp
+servings: 2
 ingredients: 
-- { quantity: "1", ingredient: "Ceba dolça" }
-- { quantity: "60g", ingredient: "Maionesa", comments: "kiwpie si n'hi ha" }
-- { quantity: "20g", ingredient: "Ketchup" }
-- { quantity: "20g", ingredient: "Mostassa americana" }
-- { ingredient: "Cogombres encurtits" }
-- { quantity: "1 cdeta", ingredient: "Glutamat monosodic", comments: "opcional" }
-- { quantity: "1 cdeta", ingredient: "Vinagre d'arros", comments: "si es fa servir maionesa normal" }
-- { quantity: "300-400g", ingredient: "Carn de vedella" }
-- { quantity: "8", ingredient: "Tortilles petits", comments: "a ser possibles de blat moro" }
-- { ingredient: "Formatge per fondre", comments: "Lamines de cheddar per exemple" }
-- { ingredient: "Enciam Iceberg" }
+  - { quantity: "1", ingredient: "Ceba dolça" }
+  - { quantity: "60g", ingredient: "Maionesa", comments: "kiwpie si n'hi ha" }
+  - { quantity: "20g", ingredient: "Ketchup" }
+  - { quantity: "20g", ingredient: "Mostassa americana" }
+  - { ingredient: "Cogombres encurtits" }
+  - { quantity: "1 cdeta", ingredient: "Glutamat monosodic", comments: "opcional" }
+  - { quantity: "1 cdeta", ingredient: "Vinagre d'arros", comments: "si es fa servir maionesa normal" }
+  - { quantity: "300-400g", ingredient: "Carn de vedella" }
+  - { quantity: "8", ingredient: "Tortilles petits", comments: "a ser possibles de blat moro" }
+  - { ingredient: "Formatge per fondre", comments: "Lamines de cheddar per exemple" }
+  - { ingredient: "Enciam Iceberg" }
 
 steps:
   - Tallar la ceba a daus i sofregir a foc suau amb oli i mantega i afegir sal per a que sui durant uns 20-30 mins fins que estigui caramelitzada.

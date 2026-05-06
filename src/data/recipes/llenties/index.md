@@ -6,7 +6,7 @@ category: Llegums
 difficulty: Facil
 thumbnail: ./llenties.webp
 heroImage: ./llenties-real.webp
-portions: 4
+servings: 4
 ingredients:
   - { quantity: 320g, ingredient: Llenties, comments: 80g per persona }
   - { quantity: '1', ingredient: Pebrot verd }
