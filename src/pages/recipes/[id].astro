@@ -91,8 +91,9 @@ const recipeData = recipe.data;
           <h2>Instruccions</h2>
           <ol>
             {
-              recipeData.steps?.map((step) => (
-                <li>
+              recipeData.steps?.map((step, i) => (
+                <li class="step">
+                  <span>{i + 1}</span>
                   <p>{step}</p>
                 </li>
               ))
@@ -192,15 +193,6 @@ const recipeData = recipe.data;
     max-width: 75ch;
     line-height: 2;
     white-space: pre-line;
-  }
-
-  ol {
-    padding-left: 18px;
-
-    @supports (-webkit-touch-callout: none) or (--webkit-hyphens: none) {
-      /* CSS specific to iOS devices */
-      padding-left: 22px;
-    }
   }
 
   ol > li {
@@ -318,5 +310,46 @@ const recipeData = recipe.data;
     @media (width <= 850px) {
       padding: 0;
     }
+  }
+
+  .steps h2 {
+    margin: 0px 0 16px 0;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+    position: relative;
+  }
+
+  .step > span {
+    line-height: 1;
+    background-color: #d8d8d8;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 28px;
+    height: 28px;
+    margin-top: 2px;
+  }
+
+  .step::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    top: 28px;
+    bottom: -12px;
+    width: 1px;
+    background-color: #d8d8d8;
+    background: linear-gradient(to bottom, #d8d8d8 70%, transparent);
+  }
+
+  .step:last-child::after {
+    width: 0;
   }
 </style>
