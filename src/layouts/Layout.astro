@@ -3,10 +3,11 @@ import SiteHeader from "../components/SiteHeader.astro";
 
 interface Props {
 	title: string;
-	showBackButton?: boolean;
+	logoText?: string;
+	isHomeScreen: boolean;
 }
 
-const { title, showBackButton = true } = Astro.props;
+const { title, isHomeScreen, logoText } = Astro.props;
 ---
 
 <!doctype html>
@@ -19,7 +20,7 @@ const { title, showBackButton = true } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<SiteHeader showBackButton={showBackButton} />
+		<SiteHeader isHomeScreen={isHomeScreen} , logoText={logoText} />
 		<div class="app-container">
 			<slot />
 		</div>
@@ -92,11 +93,11 @@ const { title, showBackButton = true } = Astro.props;
 	[data-category="Postre"] {
 		background-color: rgba(169, 113, 75, 0.53);
 	}
-	
+
 	[data-category="Esmorzar"] {
 		background-color: rgba(255, 216, 169, 0.802);
 	}
-	
+
 	[data-category="Curry"] {
 		background-color: rgb(212, 160, 23, 0.602);
 	}
@@ -118,6 +119,20 @@ const { title, showBackButton = true } = Astro.props;
 		overflow: hidden;
 		white-space: nowrap;
 		border: 0;
+	}
+
+	.mobile {
+		display: none;
+
+		@media (width <= 850px) {
+			display: unset;
+		}
+	}
+
+	.desktop {
+		@media (width <= 850px) {
+			display: none;
+		}
 	}
 </style>
 

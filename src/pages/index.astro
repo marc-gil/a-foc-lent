@@ -9,7 +9,7 @@ const recipes = await getCollection("recipes");
 const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
 ---
 
-<Layout title="El meu receptari personal" showBackButton={false}>
+<Layout title="El meu receptari personal", isHomeScreen={true}>
   <main>
     <header>
       <span>Benvingut al meu</span>
@@ -54,6 +54,14 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
 
   header span {
     color: #5f5e5e;
+  }
+
+  h1 {
+    font-size: 32px;
+
+    @media (width <= 850px) {
+      font-size: 28px;
+    }
   }
 
   ul {
