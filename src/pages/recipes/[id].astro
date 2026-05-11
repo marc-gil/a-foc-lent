@@ -16,7 +16,7 @@ const { recipe } = Astro.props;
 const recipeData = recipe.data;
 ---
 
-<Layout title={recipeData.title}>
+<Layout title={recipeData.title}, isHomeScreen={false}>
   <main>
     <article>
       <header>
@@ -65,7 +65,7 @@ const recipeData = recipe.data;
             <h2>Ingredients</h2>
             {
               recipeData.servings && (
-                <span class="servings">{`per a ${recipeData.servings} ${recipeData.servings > 1 ? 'racions' : 'ració'}`}</span>
+                <span class="servings">{`per a ${recipeData.servings} ${recipeData.servings > 1 ? "racions" : "ració"}`}</span>
               )
             }
           </header>
@@ -115,10 +115,11 @@ const recipeData = recipe.data;
   }
 
   h1 {
-    font-size: 48px;
+    font-size: 42px;
 
     @media (width <= 850px) {
-      font-size: 40px;
+      font-size: 34px;
+      line-height: 1.5;
       order: 1;
       width: 100%;
       text-align: center;
