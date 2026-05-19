@@ -10,7 +10,7 @@ interface Props {
 const { isHomeScreen, logoText = "receptari" } = Astro.props;
 ---
 
-<header class={isHomeScreen ? "" : "fade-in"}>
+<header> <!-- class={isHomeScreen ? "" : "fade-in"}> -->
   <nav aria-label="Navegació principal" class={isHomeScreen ? "home" : ""}>
     {
       !isHomeScreen && (
