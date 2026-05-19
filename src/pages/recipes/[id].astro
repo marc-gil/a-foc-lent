@@ -17,7 +17,7 @@ const recipeData = recipe.data;
 ---
 
 <Layout title={recipeData.title}, isHomeScreen={false}>
-  <main>
+  <main class="v2">
     <article>
       <header>
         <div class="hero">
@@ -354,5 +354,40 @@ const recipeData = recipe.data;
 
   .step:last-child::after {
     width: 0;
+  }
+
+  .v2 h1 {
+    view-timeline-name: --header-trigger;
+  }
+
+  .v2 {
+    @media (width <= 850px) {
+      & article {
+        padding: 0px;
+      }
+
+      & article > header {
+        gap: 0;
+      }
+
+      & img {
+        position: relative;
+        z-index: 1;
+        border-radius: 0;
+      }
+
+      & .hero {
+        z-index: 2;
+        margin-top: -20px;
+        background-color: var(--bg-color);
+        padding: 16px;
+        padding-bottom: 0px;
+        border-radius: 24px;
+      }
+
+      & .recipe {
+        padding: 0 16px;
+      }
+    }
   }
 </style>
