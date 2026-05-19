@@ -93,6 +93,47 @@ const { isHomeScreen, logoText = "receptari" } = Astro.props;
     border-radius: 8px;
     width: fit-content;
     padding: 8px;
+    color: black;
+
+    @media (width <= 850px) {
+      background-color: var(--bg-color);
+      /*border: 1px solid #bebebe;*/
+    }
+  }
+
+  .fade-in {
+    @media (width <= 850px) {
+      position: fixed;
+      background-color: var(--bg-color);
+      top: 0;
+      z-index: 3;
+
+      /*transform: translate(-100%); */
+      background-color: transparent;
+      color: transparent;
+      /* Animation using the view timeline of the h2 */
+      animation: reveal-header linear;
+
+      animation-timeline: --header-trigger;
+
+      /* The animation only plays while the h1 is exiting the viewport */
+      animation-range: exit 1% exit 10%;
+      /* Keep final state (visible) after the h1 has disappeared */
+      animation-fill-mode: forwards;
+      animation-duration: 500ms;
+    }
+  }
+
+  /* Keyframes: from hidden to visible */
+  @keyframes reveal-header {
+    0% {
+      color: transparent;
+      background-color: transparent;
+    }
+    100% {
+      color: black;
+      background-color: var(--bg-color);
+    }
   }
 
   button:active,
