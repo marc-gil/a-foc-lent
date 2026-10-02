@@ -104,18 +104,25 @@ const { filters, showSearchIcon = true } = Astro.props;
   :global([data-theme="minimal"]) {
     nav {
       padding: 20px 0;
+
+      @media (width <= 850px) {
+        padding: 20px 0 14px 0;
+      }
     }
 
     label {
       background-color: transparent;
       font-weight: 500;
       padding: 8px 10px;
+
+      @media (width <= 850px) {
+        padding: 4px 6px;
+      }
     }
 
     input:checked + label {
       background-color: #d2d2d2;
       color: #111111;
-      box-shadow: -.5ch 0 #d2d2d2, .5ch 0 #d2d2d2;
     }
   }
 </style>
