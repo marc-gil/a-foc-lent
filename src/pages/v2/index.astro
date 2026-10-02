@@ -1,0 +1,84 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/LayoutV2.astro";
+import RecipeSearch from "../../components/home/RecipeSearch.astro";
+import RecipeCard from "../../components/home/RecipeCardMinimal.astro";
+
+const recipes = await getCollection("recipes");
+
+const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
+---
+
+<Layout title="El meu receptari personal" , isHomeScreen={true}>
+  <main data-theme="minimal">
+    <header>
+      <h1>Receptari personal</h1>
+    </header>
+    <hr />
+    <RecipeSearch filters={filters} showSearchIcon={false} />
+
+    <ul>
+      {
+        recipes.map((recipe) => (
+          <li>
+            <RecipeCard recipe={recipe} />
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Layout>
+
+<style>
+  main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+    padding: 20px;
+
+    @media (width <= 850px) {
+      padding: 20px
+      
+    }
+  }
+
+  header {
+    margin-bottom: 21px;
+
+    @media (width <= 850px) {
+      margin-bottom: 11px;
+    }
+  }
+
+  h1 {
+    font-size: 32px;
+
+     @media (width <= 850px) {
+      font-size: 24px;
+    }
+  }
+
+  hr {
+    border: 1px solid #000;
+    margin-bottom: 21px;
+
+    @media (width <= 850px) {
+      margin-bottom: 11px;
+    }
+  }
+
+  li::before {
+    display: block;
+    content: "-----------------------------------------------------------------------------------------------------------------";
+    overflow: hidden;
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+
+  li:not(:first-of-type)::before {
+   margin-top: 4px;
+  }
+
+</style>

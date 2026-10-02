@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import ClockIcon from "./ClockIcon.astro";
-import { formatDuration } from "../../lib/duration";
+import { formatDurationHuman as formatDuration } from "../../lib/duration";
 
 interface Props {
   recipe: CollectionEntry<"recipes">;

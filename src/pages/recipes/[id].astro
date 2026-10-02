@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import ClockIcon from "../../components/home/ClockIcon.astro";
-import { formatDuration } from "../../lib/duration";
+import { formatDurationHuman as formatDuration } from "../../lib/duration";
 
 export async function getStaticPaths() {
   const recipe = await getCollection("recipes");
@@ -78,7 +78,7 @@ const recipeData = recipe.data;
                     <span class="ingredient-name">
                       {ingredient.ingredient}
                       {ingredient.comments && (
-                        <span class="comment">{`(${ingredient.comments})`}</span>
+                        <span class="comment">{` (${ingredient.comments})`}</span>
                       )}
                     </span>
                   </li>
