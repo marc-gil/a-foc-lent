@@ -1,10 +1,16 @@
 ---
 import SearchIcon from "../icons/Search.astro";
+
+interface Props {
+  showIcon: boolean;
+}
+
+const { showIcon } = Astro.props;
 ---
 
 <label for="recipe-search" class="visually-hidden">Search recipes</label>
 <div class="search-box">
-  <SearchIcon />
+  {showIcon && <SearchIcon />}
   <input id="recipe-search" type="search" placeholder="Busca aqui..." />
 </div>
 
@@ -43,9 +49,11 @@ import SearchIcon from "../icons/Search.astro";
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: #fff;
-    border-radius: 32px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+
+    @media (width <= 850px) {
+      padding: 6px 12px;
+    }
   }
 
   .visually-hidden {
@@ -57,5 +65,27 @@ import SearchIcon from "../icons/Search.astro";
     overflow: hidden;
     white-space: nowrap;
     border: 0;
+  }
+
+  :global([data-theme="classic"]) {
+    .search-box {
+      border-radius: 32px;
+      background-color: #fff;
+    }
+  }
+
+  :global([data-theme="minimal"]) {
+    input[type="search"]::placeholder {
+      color: #4a4a4a;
+      font-weight: 500;
+    }
+
+    .search-box {
+      background-color: #d2d2d2;
+    }
+
+    .search-box:has(input:focus-visible) {
+      box-shadow: inset 0 -2px 0 #111;
+    }
   }
 </style>

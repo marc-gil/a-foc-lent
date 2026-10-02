@@ -1,0 +1,98 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatDurationDigitalClock } from "../../lib/duration";
+
+interface Props {
+  recipe: CollectionEntry<"recipes">;
+}
+
+const { data: recipeData } = Astro.props.recipe;
+---
+
+<article>
+  <time datetime={recipeData.duration}>
+    {formatDurationDigitalClock(recipeData.duration)}
+  </time>
+  <h2>
+    <a href={`/a-foc-lent/recipes/${Astro.props.recipe.id}/`}>
+      {recipeData.title}
+    </a>
+  </h2>
+  <footer>
+    <span class="category" data-category={recipeData.category}>
+      {recipeData.category}
+    </span>
+    <span data-difficulty={recipeData.difficulty} class="difficulty">
+      {recipeData.difficulty}
+    </span>
+  </footer>
+</article>
+
+<script>
+  let selectedCategory: string = "";
+  let searchInput: string = "";
+  const recipeCards = document.querySelectorAll("article");
+  document.addEventListener("filter-changed", (e) => {
+    selectedCategory = (e as CustomEvent<{ filter: string }>).detail.filter;
+
+    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
+  });
+
+  document.addEventListener("search-input-changed", (e) => {
+    searchInput = (
+      e as CustomEvent<{ search: string }>
+    ).detail.search.toLowerCase();
+
+    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
+  });
+
+  function applyFilters(recipeCard: HTMLElement) {
+    const liElement = recipeCard.parentElement!;
+    const catageorySpan = recipeCard!.querySelector(
+      "[data-category]",
+    ) as HTMLElement;
+
+    const title = Array.from(recipeCard.children)
+      .filter((child) => child.tagName == "H2")[0]
+      .textContent.toLowerCase();
+
+    const textMatches = title.includes(searchInput) || searchInput == "";
+    const categoryMatches =
+      selectedCategory === "" ||
+      catageorySpan.dataset.category === selectedCategory;
+
+    liElement.style.display = textMatches && categoryMatches ? "block" : "none";
+  }
+</script>
+
+<style>
+  article {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0px 20px;
+    
+  }
+
+  time {
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+  }
+
+  h2 {
+    font-weight: 500;
+
+    @media (width <= 850px) {
+      font-size: 18px;
+    }
+  }
+
+  footer {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  
+  span + span {
+    margin-left: 20px;
+  }
+</style>

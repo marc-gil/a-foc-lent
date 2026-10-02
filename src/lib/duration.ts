@@ -1,8 +1,14 @@
-export function formatDuration(iso: string): string {
+
+export function formatDurationHuman(iso: string): string {
   const { hours, minutes } = parseDuration(iso);
   return [hours && `${hours}h`, minutes && `${minutes}m`]
     .filter(Boolean)
     .join(" ");
+}
+
+export function formatDurationDigitalClock(iso: string): string {
+  const { hours, minutes } = parseDuration(iso);
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 }
 
 function parseDuration(iso: string) {

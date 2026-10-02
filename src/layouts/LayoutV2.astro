@@ -1,0 +1,160 @@
+---
+import { Font } from 'astro:assets';
+
+interface Props {
+  title: string;
+  logoText?: string;
+  isHomeScreen: boolean;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/a-foc-lent/favicon.ico" />
+    <link rel="manifest" href="/a-foc-lent/manifest.json" />
+    <Font cssVariable="--font-courier-prime" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Nombre de tu App" />
+    <link rel="apple-touch-icon" href="/a-foc-lent/favicon.png" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg-color: #f7f7f7;
+    --text-main: #1c241e;
+  }
+
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    /* scrollbar-width: thin; */
+    /* scrollbar-color: grey transparent; */
+    timeline-scope: --header-trigger;
+  }
+
+  fieldset {
+    border: none;
+  }
+
+  input {
+    color: inherit;
+    font-family: inherit;
+    text-transform: inherit;
+  }
+
+  [data-category="Ramen"] {
+    background-color: rgb(243, 156, 18, 53%);
+  }
+
+  [data-category="Beguda"] {
+    background-color: rgba(97, 189, 250, 0.53);
+  }
+
+  [data-category="Pasta"] {
+    background-color: rgba(250, 217, 97, 0.53);
+  }
+
+  [data-category="Carn"] {
+    background-color: rgba(192, 57, 43, 0.53);
+  }
+
+  [data-category="Llegums"] {
+    background-color: rgba(158, 176, 112, 0.649);
+  }
+
+  [data-category="Postre"] {
+    background-color: rgba(169, 113, 75, 0.53);
+  }
+
+  [data-category="Esmorzar"] {
+    background-color: rgba(255, 216, 169, 0.802);
+  }
+
+  [data-category="Curry"] {
+    background-color: rgb(212, 160, 23, 0.602);
+  }
+
+  [data-difficulty="Facil"] {
+    background-color: rgba(119, 253, 143, 0.631);
+  }
+
+  [data-difficulty="Intermedi"] {
+    background-color: rgba(247, 220, 111, 0.649);
+  }
+
+  [data-theme="minimal"] {
+    font-family: var(--font-courier-prime), 'Courier New', 'Liberation Mono', monospace;
+    font-weight: 400;
+    color: #111111;
+    text-transform: uppercase;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .mobile {
+    display: none;
+
+    @media (width <= 850px) {
+      display: unset;
+    }
+  }
+
+  .desktop {
+    @media (width <= 850px) {
+      display: none;
+    }
+  }
+</style>

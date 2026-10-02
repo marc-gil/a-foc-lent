@@ -3,13 +3,14 @@ import SearchInput from "../../components/home/SearchInput.astro";
 
 interface Props {
   filters: string[];
+  showSearchIcon?: boolean;
 }
 
-const {filters} = Astro.props; 
+const { filters, showSearchIcon = true } = Astro.props;
 ---
 
 <search>
-  <SearchInput />
+  <SearchInput showIcon={showSearchIcon} />
   <nav aria-label="Filtre per àpat">
     <fieldset>
       <legend class="visually-hidden">Filtre per àpat</legend>
@@ -22,7 +23,9 @@ const {filters} = Astro.props;
           filters.map((filter) => (
             <li>
               <input type="radio" name="recipe-filter" id={filter.toLowerCase()} value={filter}/>
-              <label data-category={filter} for={filter.toLowerCase()}>{filter}</label>
+              <label data-category={filter} for={filter.toLowerCase()}>
+                {filter}
+              </label>
             </li>
           ))
         }
@@ -34,14 +37,14 @@ const {filters} = Astro.props;
 <script>
   const filterRadioButtons = document.querySelectorAll("input[name='recipe-filter']");
   filterRadioButtons.forEach(filterRadioButton => {
-    filterRadioButton.addEventListener('change', (e) => {
+    filterRadioButton.addEventListener("change", (e) => {
       const target = e.target as HTMLInputElement;
-      const event = new CustomEvent('filter-changed', {
+      const event = new CustomEvent("filter-changed", {
         bubbles: true,
-        detail: { filter: target.value }
+        detail: { filter: target.value },
       });
       target.dispatchEvent(event);
-    })
+    });
   });
 </script>
 
@@ -68,12 +71,8 @@ const {filters} = Astro.props;
   label {
     display: block;
     padding: 12px 22px;
-    border-radius: 16px;
-    background-color: #fff;
-    color: #777;
     font-size: medium;
     font-weight: bold;
-    border: 1px solid #f1f1f1;
     cursor: pointer;
   }
 
@@ -86,5 +85,37 @@ const {filters} = Astro.props;
   input:checked + label {
     background-color: #303030;
     color: #fff;
+  }
+
+  :global([data-theme="classic"]) {
+    label {
+      border-radius: 16px;
+      background-color: #fff;
+      color: #777;
+      border: 1px solid #f1f1f1;
+    }
+
+    input:checked + label {
+      background-color: #303030;
+      color: #fff;
+    }
+  }
+
+  :global([data-theme="minimal"]) {
+    nav {
+      padding: 20px 0;
+    }
+
+    label {
+      background-color: transparent;
+      font-weight: 500;
+      padding: 8px 10px;
+    }
+
+    input:checked + label {
+      background-color: #d2d2d2;
+      color: #111111;
+      box-shadow: -.5ch 0 #d2d2d2, .5ch 0 #d2d2d2;
+    }
   }
 </style>
