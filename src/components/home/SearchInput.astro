@@ -18,7 +18,6 @@ const { showIcon } = Astro.props;
   const searchInput = document.getElementById("recipe-search");
   searchInput?.addEventListener("input", (e) => {
     const target = e.target as HTMLInputElement;
-    console.log("Filtering " + target.value);
     target.dispatchEvent(
       new CustomEvent("search-input-changed", {
         bubbles: true,
