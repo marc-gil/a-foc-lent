@@ -2,8 +2,8 @@
   "name": "Receptari personal",
   "short_name": "Receptari",
   "description": "El meu receptari personal",
-  "start_url": "/a-foc-lent/",
-  "scope": "/a-foc-lent/",
+  "start_url": "/a-foc-lent/v2",
+  "scope": "/a-foc-lent/v2",
   "display": "standalone",
   "background_color": "#ffffff",
   "icons": [
