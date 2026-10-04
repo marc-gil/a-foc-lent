@@ -14,7 +14,7 @@ const { data: recipeData } = Astro.props.recipe;
     {formatDurationDigitalClock(recipeData.duration)}
   </time>
   <h2>
-    <a href={`/a-foc-lent/recipes$/v2/${Astro.props.recipe.id}/`}>
+    <a href={`/a-foc-lent/recipes/v2/${Astro.props.recipe.id}/`}>
       {recipeData.title}
     </a>
   </h2>
