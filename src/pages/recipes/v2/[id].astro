@@ -1,0 +1,273 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../../layouts/LayoutV2.astro";
+
+import { formatDurationDigitalClock as formatDuration } from "../../../lib/duration";
+
+export async function getStaticPaths() {
+  const recipe = await getCollection("recipes");
+  return recipe.map((recipe) => ({
+    params: { id: recipe.id },
+    props: { recipe },
+  }));
+}
+
+const { recipe } = Astro.props;
+const recipeData = recipe.data;
+---
+
+<Layout title={recipeData.title} isHomeScreen={false}>
+  <header class="site-header" data-theme="minimal">
+    <nav aria-label="Navegació principal">
+      <a href="/a-foc-lent/v2" class="back" aria-label="Tornar a les receptes">
+        Receptes
+      </a>
+    </nav>
+  </header>
+  <main data-theme="minimal">
+    <article>
+      <header>
+        <img
+          src={recipeData.heroImage?.src}
+          alt={recipeData.title}
+          width={recipeData.heroImage?.width}
+          height={recipeData.heroImage?.height}
+        />
+        <div class="hero">
+          <time datetime={recipeData.duration}>
+            {formatDuration(recipeData.duration)}
+          </time>
+          <h1>{recipeData.title}</h1>
+          <dl>
+            <dt class="visually-hidden">Categoria</dt>
+            <dd class="category" data-category={recipeData.category}>
+              {recipeData.category}
+            </dd>
+            <dt class="visually-hidden">Dificultat</dt>
+            <dd data-difficulty={recipeData.difficulty} class="difficulty">
+              {recipeData.difficulty}
+            </dd>
+          </dl>
+          {
+            recipeData.tags && recipeData.tags.length > 0 && (
+              <ul aria-label="Etiquetes" style="display: none;">
+                {recipeData.tags.map((tag) => (
+                  <li>{tag}</li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+      </header>
+
+      <div class="recipe">
+        <section class="ingredients">
+          <header>
+            <h2>
+              Ingredients
+              {
+                recipeData.servings && (
+                  <span class="servings">{` per a ${recipeData.servings} ${recipeData.servings > 1 ? "racions" : "ració"}:`}</span>
+                )
+              }
+            </h2>
+          </header>
+          <ul>
+            {
+              recipeData.ingredients?.map((ingredient) => {
+                return (
+                  <li>
+                    <span class="quantity">{ingredient.quantity}</span>
+                    <span class="ingredient-name">
+                      {ingredient.ingredient}
+                      {ingredient.comments && (
+                        <span class="comment">{` (${ingredient.comments})`}</span>
+                      )}
+                    </span>
+                  </li>
+                );
+              })
+            }
+          </ul>
+        </section>
+        <section class="steps">
+          <h2>Instruccions</h2>
+          <ol>
+            {
+              recipeData.steps?.map((step, i) => (
+                <li class="step">
+                  <span>{i + 1}</span>
+                  <p>{step}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+    padding: 20px;
+    padding-top: 10px;
+
+    @media (width <= 850px) {
+      padding: 20px;
+      padding-top: 10px;
+    }
+  }
+
+  .site-header {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: 15px;
+    padding: 20px;
+    padding-bottom: 0px;
+  }
+
+  nav {
+    padding-bottom: 2px;
+  }
+
+  .back::before {
+    content: "<- ";
+    white-space: pre;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    max-width: 760px;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 4px 20px;
+    margin: 8px 0;
+  }
+
+  time {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 18px;
+
+    @media (width <= 850px) {
+      font-size: 15px;
+    }
+  }
+
+  dl {
+    grid-column: 2;
+    display: flex;
+    gap: 20px;
+    font-size: 15px;
+  }
+
+  h2 {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 2px 0;
+    background-color: #d2d2d2;
+  }
+
+  .ingredients li {
+    display: grid;
+    column-gap: 12px;
+    grid-template-columns: 2fr 5fr;
+  }
+
+  .ingredients ul {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .ingredients li + li {
+    margin-top: 6px;
+  }
+
+  .steps li {
+    display: flex;
+    gap: 20px;
+    font-size: 15px;
+  }
+
+  .steps li + li {
+    margin-top: 6px;
+  }
+
+  .site-header::after,
+  .hero::before,
+  section::before,
+  ul::before,
+  ol::before {
+    line-height: 12px;
+    display: block;
+    font-size: 15px;
+    height: 12px;
+    content: "-----------------------------------------------------------------------------------------------------------------";
+    overflow: hidden;
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+
+  .hero::before {
+    grid-column: 1 / -1;
+  }
+
+  @media (width > 850px) {
+    article > header {
+      display: flex;
+      gap: 24px;
+      /*margin-bottom: 18px;*/
+      /*nou*/
+      flex-direction: column;
+      align-items: center;
+    }
+
+    article > header::after {
+      line-height: 12px;
+      display: block;
+      font-size: 15px;
+      height: 12px;
+      content: "-----------------------------------------------------------------------------------------------------------------";
+      overflow: hidden;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      width: 100%;
+    }
+
+    section::before {
+      display: none;
+    }
+
+    .hero::before {
+      display: none;
+    }
+
+    .hero {
+      align-self: center;
+    }
+
+    .recipe {
+      width: 100%;
+      display: flex;
+      gap: 20px;
+    }
+
+    .recipe section {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+  }
+</style>

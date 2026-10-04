@@ -70,8 +70,10 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
   }
 
   li::before {
-    margin-top: 4px;
+    margin-top: 0px;
+    margin-bottom: 1px;
     display: block;
+    height: 12px;
     content: "-----------------------------------------------------------------------------------------------------------------";
     overflow: hidden;
     letter-spacing: 2px;
