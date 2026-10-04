@@ -14,7 +14,7 @@ const { data: recipeData } = Astro.props.recipe;
     {formatDurationDigitalClock(recipeData.duration)}
   </time>
   <h2>
-    <a href={`/a-foc-lent/recipes/${Astro.props.recipe.id}/`}>
+    <a href={`/a-foc-lent/recipes$/v2/${Astro.props.recipe.id}/`}>
       {recipeData.title}
     </a>
   </h2>
@@ -70,7 +70,6 @@ const { data: recipeData } = Astro.props.recipe;
     display: grid;
     grid-template-columns: max-content 1fr;
     gap: 0px 20px;
-    
   }
 
   time {
@@ -81,6 +80,7 @@ const { data: recipeData } = Astro.props.recipe;
 
   h2 {
     font-weight: 500;
+    font-size: 20px;
 
     @media (width <= 850px) {
       font-size: 18px;
@@ -91,7 +91,7 @@ const { data: recipeData } = Astro.props.recipe;
     grid-column: 2;
     grid-row: 2;
   }
-  
+
   span + span {
     margin-left: 20px;
   }
