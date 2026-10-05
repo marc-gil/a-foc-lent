@@ -77,10 +77,18 @@ const { showIcon } = Astro.props;
     input[type="search"]::placeholder {
       color: #4a4a4a;
       font-weight: 500;
+
+      @media (width <= 850px) {
+        font-size: 16px;
+      }
+
     }
 
     .search-box {
       background-color: #d2d2d2;
+      @media (width <= 850px) {
+        padding: 4px 10px;
+      }
     }
 
     .search-box:has(input:focus-visible) {
