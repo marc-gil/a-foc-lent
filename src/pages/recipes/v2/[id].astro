@@ -117,11 +117,6 @@ const recipeData = recipe.data;
     position: relative;
     padding: 20px;
     padding-top: 10px;
-
-    @media (width <= 850px) {
-      padding: 20px;
-      padding-top: 10px;
-    }
   }
 
   .site-header {
@@ -160,11 +155,7 @@ const recipeData = recipe.data;
   }
 
   h1 {
-    font-size: 18px;
-
-    @media (width <= 850px) {
-      font-size: 15px;
-    }
+    font-size: 16px;
   }
 
   dl {
@@ -226,6 +217,10 @@ const recipeData = recipe.data;
   }
 
   @media (width > 850px) {
+    h1 {
+      font-size: 18px;
+    }
+
     article > header {
       display: flex;
       gap: 24px;
