@@ -9,6 +9,7 @@ export default defineConfig({
     provider: fontProviders.local(),
     name: "Courier Prime",
     cssVariable: "--font-courier-prime",
+    fallbacks: ['Courier New', 'Liberation Mono', 'monospace'],
     options: {
       variants: [{
         src: ['./src/assets/fonts/Courier Prime/CourierPrime-Regular.ttf'],
