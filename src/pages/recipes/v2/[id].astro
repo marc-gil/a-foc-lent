@@ -1,8 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../../layouts/LayoutV2.astro";
-
-import { formatDurationDigitalClock as formatDuration } from "../../../lib/duration";
+import { formatDurationHHMM as formatDuration } from "../../../lib/duration";
 
 export async function getStaticPaths() {
   const recipe = await getCollection("recipes");
@@ -16,7 +15,7 @@ const { recipe } = Astro.props;
 const recipeData = recipe.data;
 ---
 
-<Layout title={recipeData.title} isHomeScreen={false}>
+<Layout title={recipeData.title} theme="minimal">
   <header class="site-header" data-theme="minimal">
     <nav aria-label="Navegació principal">
       <a href="/a-foc-lent/v2" class="back" aria-label="Tornar a les receptes">

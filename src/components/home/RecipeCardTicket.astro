@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { formatDurationTimecode } from "../../lib/duration";
+import { formatDurationMinuteMark } from "../../lib/duration";
 
 interface Props {
   recipe: CollectionEntry<"recipes">;
@@ -45,7 +45,7 @@ const { data: recipeData } = Astro.props.recipe;
   </ul>
   <footer>
     <time datetime={recipeData.duration}>
-      {formatDurationTimecode(recipeData.duration)}
+      {formatDurationMinuteMark(recipeData.duration)}
     </time>
     <span data-difficulty={recipeData.difficulty} class="difficulty">
       {recipeData.difficulty}

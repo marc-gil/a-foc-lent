@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { formatDurationDigitalClock } from "../../lib/duration";
+import { formatDurationHHMM } from "../../lib/duration";
 
 interface Props {
   recipe: CollectionEntry<"recipes">;
@@ -11,7 +11,7 @@ const { data: recipeData } = Astro.props.recipe;
 
 <article>
   <time datetime={recipeData.duration}>
-    {formatDurationDigitalClock(recipeData.duration)}
+    {formatDurationHHMM(recipeData.duration)}
   </time>
   <h2>
     <a href={`/a-foc-lent/recipes/v2/${Astro.props.recipe.id}/`}>
