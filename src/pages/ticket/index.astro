@@ -1,0 +1,154 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/LayoutV2.astro";
+import RecipeSearch from "../../components/home/RecipeSearch.astro";
+import RecipeCard from "../../components/home/RecipeCardTicket.astro";
+
+const recipes = await getCollection("recipes");
+
+const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
+---
+
+<Layout title="El meu receptari personal" theme="ticket">
+  <main>
+    <header>
+      <h1>Que farem <span>avui?</span></h1>
+    </header>
+    <RecipeSearch filters={filters} showSearchIcon={true} />
+
+    <ul>
+      {
+        recipes.map((recipe) => (
+          <li>
+            <RecipeCard recipe={recipe} />
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Layout>
+
+<style>
+  main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+    padding: 30px 20px;
+  }
+
+  header {
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 65px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 56px;
+  }
+
+  h1 > span {
+    color: #e8432f;
+  }
+
+  ul {
+    counter-reset: ticket-number;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 12px;
+    border-top: 1px solid rgb(53 59 65);
+    padding: 18px 12px 0;
+  }
+
+  li {
+    rotate: -0.7deg;
+    transition:
+      translate 0.2s,
+      rotate 0.2s;
+  }
+
+  li:nth-child(4n) {
+    rotate: -0.4deg;
+    translate: 0 6px;
+  }
+
+
+  li:nth-child(4n + 2) {
+    rotate: 0.6deg;
+    translate: 0 6px;
+  }
+
+  li:nth-child(4n + 3) {
+    rotate: 0.4deg;
+  }
+
+  @media (width > 850px) {
+    ul {
+      grid-template-columns: repeat(auto-fill, minmax(176px, 1fr));
+      grid-auto-rows: 380px;
+      gap: 0 28px;
+      padding: 0 24px;
+      background:
+        linear-gradient(180deg, #0000 6px, #5c636a 6px 25px, #0000 25px) 0 0 /
+          8px 380px repeat-y,
+        linear-gradient(
+            180deg,
+            #0000 10px,
+            #8c939a 10px,
+            #4a5056 14.4px,
+            #2a2e32 16.6px,
+            #6a7178 21px,
+            #0000 21px
+          )
+          0 0 / 100% 380px repeat-y,
+        linear-gradient(180deg, #0000 21px, rgb(0 0 0 / 0.34) 21px, #0000 42px)
+          0 0 / 100% 380px repeat-y;
+    }
+
+    li {
+      position: relative;
+      padding-top: 28px;
+      rotate: -0.9deg;
+      transform-origin: 50% 27px;
+    }
+
+    li:nth-child(5n + 2) {
+      rotate: 0.7deg;
+    }
+
+    li:nth-child(5n + 3) {
+      rotate: -.3deg;
+    }
+
+    li:nth-child(5n + 4) {
+      rotate: 1.1deg;
+    }
+
+    li:nth-child(5n) {
+      rotate: -0.6deg;
+    }
+
+    li:nth-child(n) {
+      translate: none;
+    }
+
+    li::before {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      top: 16px;
+      left: 50%;
+      right: 50%;
+      width: 38px;
+      height: 22px;
+      margin-left: -19px;
+      border-radius: 3px;
+      background: linear-gradient(180deg, #b4bac0, #6b7278 55%, #4a5056);
+      box-shadow: 0 2px 3px rgb(0 0 0 / 0.4) inset 0 1px 0
+        rgb(255 255 255 / 0.4);
+    }
+  }
+</style>

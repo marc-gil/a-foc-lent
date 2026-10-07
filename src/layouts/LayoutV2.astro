@@ -1,13 +1,12 @@
 ---
-import { Font } from 'astro:assets';
+import { Font } from "astro:assets";
 
 interface Props {
   title: string;
-  logoText?: string;
-  isHomeScreen: boolean;
+  theme: "minimal" | "ticket";
 }
 
-const { title } = Astro.props;
+const { title, theme } = Astro.props;
 ---
 
 <!doctype html>
@@ -15,7 +14,14 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <Font cssVariable="--font-courier-prime" preload/>
+    {
+      theme == "minimal" ? (
+        <Font cssVariable="--font-courier-prime" preload />
+      ) : (
+        <Font cssVariable="--font-big-shoulders-display" preload />
+      )
+    }
+
     <link rel="icon" href="/a-foc-lent/favicon.ico" />
     <link rel="manifest" href="/a-foc-lent/manifest.json" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -27,7 +33,7 @@ const { title } = Astro.props;
     <link rel="apple-touch-icon" href="/a-foc-lent/favicon.png" />
     <title>{title}</title>
   </head>
-  <body>
+  <body data-theme={theme}>
     <slot />
   </body>
 </html>
@@ -127,10 +133,25 @@ const { title } = Astro.props;
   }
 
   [data-theme="minimal"] {
-    font-family: var(--font-courier-prime), 'Courier New', 'Liberation Mono', monospace;
+    font-family: var(--font-courier-prime);
     font-weight: 400;
     color: #111111;
     text-transform: uppercase;
+  }
+
+  [data-theme="ticket"] {
+    font-weight: 500;
+    color: #111111;
+    text-transform: uppercase;
+    font-family: var(--font-big-shoulders-display);
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgb(255 255 255 / 0.014) 0 1px,
+        transparent 1px 3px
+      ),
+      radial-gradient(120% 40% at 80% 0%, #22262a, transparent 70%),
+      rgb(21 23 25);
   }
 
   .visually-hidden {

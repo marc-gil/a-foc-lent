@@ -125,4 +125,28 @@ const { filters, showSearchIcon = true } = Astro.props;
       color: #111111;
     }
   }
+
+  :global([data-theme="ticket"]) {
+     nav {
+      padding: 16px 0;
+    }
+
+    label {
+      border-radius: 4px;
+      padding: 11px 14px 10px;
+      border: 1px solid rgb(53 59 65);
+      background-color: rgb(29 32 35);
+      color: rgb(169 174 180);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.78px;
+      font-family: ui-monospace, monospace;
+    }
+
+    input:checked + label {
+      background-color: #f3efe6;
+      border-color: #f3efe6;
+      color: rgb(26 25 24);
+    }
+  }
 </style>
