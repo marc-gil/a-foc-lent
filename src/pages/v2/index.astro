@@ -9,7 +9,7 @@ const recipes = await getCollection("recipes");
 const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
 ---
 
-<Layout title="El meu receptari personal" , isHomeScreen={true}>
+<Layout title="El meu receptari personal" theme="minimal">
   <main data-theme="minimal">
     <header>
       <h1>Receptari personal</h1>
@@ -50,7 +50,7 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
   h1 {
     font-size: 32px;
 
-     @media (width <= 850px) {
+    @media (width <= 850px) {
       font-size: 22px;
     }
   }
@@ -74,5 +74,4 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
     letter-spacing: 2px;
     white-space: nowrap;
   }
-
 </style>

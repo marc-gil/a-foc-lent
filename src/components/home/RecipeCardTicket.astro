@@ -1,0 +1,189 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatDurationTimecode } from "../../lib/duration";
+
+interface Props {
+  recipe: CollectionEntry<"recipes">;
+}
+
+const { data: recipeData } = Astro.props.recipe;
+---
+
+<article>
+  <header>
+    <span></span>
+    <span class="category" data-category={recipeData.category}>
+      {recipeData.category}
+    </span>
+  </header>
+  <h2>
+    <a href={`/a-foc-lent/recipes/${Astro.props.recipe.id}/`}>
+      {recipeData.title}
+    </a>
+  </h2>
+  <ul>
+    {
+      recipeData.ingredients.slice(0, 3).map((ingredient) => {
+        return (
+          <li>
+            <span>
+              {ingredient.quantity
+                ? ingredient.quantity + " " + ingredient.ingredient
+                : ingredient.ingredient}
+            </span>
+          </li>
+        );
+      })
+    }
+    {
+      recipeData.ingredients.length > 3 ? (
+        <li>
+          <span>+ {`${recipeData.ingredients.length - 3}`} MORE</span>
+        </li>
+      ) : null
+    }
+  </ul>
+  <footer>
+    <time datetime={recipeData.duration}>
+      {formatDurationTimecode(recipeData.duration)}
+    </time>
+    <span data-difficulty={recipeData.difficulty} class="difficulty">
+      {recipeData.difficulty}
+    </span>
+  </footer>
+</article>
+
+<script>
+  let selectedCategory: string = "";
+  let searchInput: string = "";
+  const recipeCards = document.querySelectorAll("article");
+  document.addEventListener("filter-changed", (e) => {
+    selectedCategory = (e as CustomEvent<{ filter: string }>).detail.filter;
+
+    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
+  });
+
+  document.addEventListener("search-input-changed", (e) => {
+    searchInput = (
+      e as CustomEvent<{ search: string }>
+    ).detail.search.toLowerCase();
+
+    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
+  });
+
+  function applyFilters(recipeCard: HTMLElement) {
+    const liElement = recipeCard.parentElement!;
+    const catageorySpan = recipeCard!.querySelector(
+      "[data-category]",
+    ) as HTMLElement;
+
+    const title = Array.from(recipeCard.children)
+      .filter((child) => child.tagName == "H2")[0]
+      .textContent.toLowerCase();
+
+    const textMatches = title.includes(searchInput) || searchInput == "";
+    const categoryMatches =
+      selectedCategory === "" ||
+      catageorySpan.dataset.category === selectedCategory;
+
+    liElement.style.display = textMatches && categoryMatches ? "block" : "none";
+  }
+</script>
+
+<style>
+  article {
+    position: relative;
+    counter-increment: ticket-number;
+    filter: drop-shadow(0 10px 10px rgb(0 0 0 / 0.4));
+    padding: 18px 12px 52px;
+    color: rgb(26 25 24);
+    background:
+      repeating-linear-gradient(
+          90deg,
+          rgb(26 25 24 / 0.88) 0 1px,
+          transparent 1px 5px
+        )
+        12px calc(100% - 18px) / calc(100% - 24px) 20px no-repeat,
+      repeating-linear-gradient(
+          90deg,
+          rgb(26 25 24 / 0.88) 0 2px,
+          transparent 2px 9px
+        )
+        12px calc(100% - 18px) / calc(100% - 24px) 20px no-repeat,
+      repeating-linear-gradient(
+          90deg,
+          transparent 0 13px,
+          rgb(26 25 24 / 0.88) 0 16px
+        )
+        12px calc(100% - 18px) / calc(100% - 24px) 20px no-repeat,
+      linear-gradient(180deg, #f3efe6, #eee9de);
+    mask:
+      conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg)
+        50% 0 / 11px 51% repeat-x,
+      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg)
+        50% 100% / 11px 51% repeat-x;
+  }
+
+  header > span:first-of-type::before {
+    content: "#" counter(ticket-number);
+  }
+
+  h2 {
+    margin-top: 10px;
+    letter-spacing: 0.005em;
+    text-wrap: balance;
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 22.5px;
+  }
+
+  span {
+    font-family: ui-monospace, monospace;
+  }
+
+  header > span {
+    font-size: 13px;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 3px double rgb(26, 25, 24);
+    letter-spacing: 0.08em;
+    font-weight: 600; /*revisar*/
+  }
+
+  ul {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed rgb(26 25 24 / 0.45);
+    letter-spacing: 0.25px;
+  }
+
+  li > span {
+    text-wrap-mode: wrap;
+    font-size: 13px;
+  }
+
+  li:last-of-type {
+    color: rgb(87 83 76);
+  }
+
+  footer {
+    margin-top: 9px;
+    padding-top: 9px;
+    font-size: 13px;
+    border-top: 1px dashed rgb(26 25 24 / 0.45);
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+  }
+
+  time {
+    font-family: ui-monospace, monospace;
+    text-transform: none;
+    font-size: 13px;
+  }
+</style>
