@@ -19,7 +19,14 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
     <ul>
       {
         recipes.map((recipe) => (
-          <li>
+          <li
+            data-card
+            data-difficulty={recipe.data.difficulty}
+            data-duration={recipe.data.duration}
+            data-category={recipe.data.category}
+            data-title={recipe.data.title}
+            data-tags={recipe.data.tags}
+          >
             <RecipeCard recipe={recipe} />
           </li>
         ))
@@ -27,6 +34,70 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
     </ul>
   </main>
 </Layout>
+
+<script>
+  let searchInput: string = "";
+  let selectedCategory: string = "";
+  let selectedTimeComparison: (timeToCompare: string) => boolean = () => true;
+  let selectedDifficultyComparison: (difficultyToCompare: string) => boolean = () => true;
+
+  const TIME_COMPARATORS: Record<string, (timeToCompare: string) => boolean> = {
+    "15": (timeToCompare: string) => Temporal.Duration.compare(timeToCompare, "PT15M") <= 0,
+    "30": (timeToCompare: string) => Temporal.Duration.compare(timeToCompare, "PT30M") <= 0,
+    "60": (timeToCompare: string) => Temporal.Duration.compare(timeToCompare, "PT1H") <= 0,
+    "60+": (timeToCompare: string) => Temporal.Duration.compare(timeToCompare, "PT1H") > 0,
+  };
+
+  const DIFFICULTY_COMPARATORS: Record<string, (difficultyToCompare: string) => boolean> = {
+    hard: (difficultyToCompare: string) => difficultyToCompare == "Dificil",
+    medium: (difficultyToCompare: string) => difficultyToCompare == "Intermedi",
+    easy: (difficultyToCompare: string) => difficultyToCompare == "Facil",
+  };
+
+  const recipeCards: NodeListOf<HTMLLIElement> = document.querySelectorAll("[data-card]");
+
+  document.addEventListener("filter-changed", (e) => {
+    selectedCategory = (e as CustomEvent<{ filter: string }>).detail.filter;
+
+    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
+  });
+
+  document.addEventListener("search-input-changed", (e) => {
+    searchInput = (e as CustomEvent<{ search: string }>).detail.search.toLowerCase();
+
+    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
+  });
+
+  document.addEventListener("time-changed", (e) => {
+    const receivedTime = (e as CustomEvent<{ time: string }>).detail.time;
+
+    selectedTimeComparison = TIME_COMPARATORS[receivedTime] ?? (() => true);
+
+    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
+  });
+
+  document.addEventListener("difficulty-changed", (e) => {
+    const receivedDifficulty = (e as CustomEvent<{ difficulty: string }>).detail.difficulty;
+
+    selectedDifficultyComparison = DIFFICULTY_COMPARATORS[receivedDifficulty] ?? (() => true);
+
+    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
+  });
+
+  function applyFilters(recipeCard: HTMLLIElement) {
+    const {title, category, duration, difficulty} = recipeCard.dataset;
+
+    const textMatches = title!.includes(searchInput) || searchInput == "";
+
+    const categoryMatches = selectedCategory === "" || category === selectedCategory;
+
+    const difficultyMatches = selectedDifficultyComparison(difficulty!);
+
+    const timeMatches = selectedTimeComparison(duration!);
+
+    recipeCard.hidden = textMatches && categoryMatches && difficultyMatches && timeMatches ? false : true;
+  }
+</script>
 
 <style>
   main {
@@ -73,5 +144,4 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
     letter-spacing: 2px;
     white-space: nowrap;
   }
-  
 </style>
