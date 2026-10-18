@@ -1,9 +1,11 @@
 ---
 import SearchInput from "../../components/home/SearchInput.astro";
+import CategorySearch from "./search/CategorySearch.astro";
 
 interface Props {
   filters: string[];
   showSearchIcon?: boolean;
+  theme?: string;
 }
 
 const { filters, showSearchIcon = true } = Astro.props;
@@ -11,142 +13,227 @@ const { filters, showSearchIcon = true } = Astro.props;
 
 <search>
   <SearchInput showIcon={showSearchIcon} />
-  <nav aria-label="Filtre per àpat">
-    <fieldset>
-      <legend class="visually-hidden">Filtre per àpat</legend>
-      <ul role="list">
-        <li>
-          <input type="radio" name="recipe-filter" id="tots" value="" checked />
-          <label for="tots">Tots</label>
-        </li>
-        {
-          filters.map((filter) => (
-            <li>
-              <input type="radio" name="recipe-filter" id={filter.toLowerCase()} value={filter}/>
-              <label data-category={filter} for={filter.toLowerCase()}>
-                {filter}
-              </label>
-            </li>
-          ))
-        }
-      </ul>
-    </fieldset>
-  </nav>
+  <CategorySearch categories={filters} />
+  <div class="filter-bar" data-theme={}>
+    <button id="filters-toggle" type="button" aria-expanded="false" aria-controls="recipe-filters">Filtres</button>
+    <div id="recipe-filters">
+      <fieldset>
+        <legend>Temps</legend>
+        <ul role="list">
+          <li>
+            <input type="radio" name="recipe-time" id="time-any" value="" checked />
+            <label for="time-any">Qualsevol</label>
+          </li>
+          <li>
+            <input type="radio" name="recipe-time" id="time-15" value="15" />
+            <label for="time-15">15' o menys</label>
+          </li>
+          <li>
+            <input type="radio" name="recipe-time" id="time-30" value="30" />
+            <label for="time-30">30' o menys</label>
+          </li>
+          <li>
+            <input type="radio" name="recipe-time" id="time-60" value="60" />
+            <label for="time-60">1h o menys</label>
+          </li>
+          <li>
+            <input type="radio" name="recipe-time" id="time-60+" value="60+" />
+            <label for="time-60+">Més d'1h</label>
+          </li>
+        </ul>
+      </fieldset>
+      <fieldset>
+        <legend>Dificultat</legend>
+        <ul role="list">
+          <li>
+            <input type="radio" name="recipe-difficulty" id="difficulty-any" value="" checked />
+            <label for="difficulty-any">Qualsevol</label>
+          </li>
+          <li>
+            <input type="radio" name="recipe-difficulty" id="difficulty-easy" value="easy" />
+            <label for="difficulty-easy">Facil</label>
+          </li>
+          <li>
+            <input type="radio" name="recipe-difficulty" id="difficulty-medium" value="medium" />
+            <label for="difficulty-medium">Intermig</label>
+          </li>
+          <li>
+            <input type="radio" name="recipe-difficulty" id="difficulty-hard" value="hard" />
+            <label for="difficulty-hard">Dificil</label>
+          </li>
+        </ul>
+      </fieldset>
+    </div>
+  </div>
 </search>
 
 <script>
-  const filterRadioButtons = document.querySelectorAll("input[name='recipe-filter']");
-  filterRadioButtons.forEach(filterRadioButton => {
-    filterRadioButton.addEventListener("change", (e) => {
+  const timeRadioButtons = document.querySelectorAll("input[name='recipe-time']");
+  timeRadioButtons.forEach((timeRadioButton) => {
+    timeRadioButton.addEventListener("change", (e) => {
       const target = e.target as HTMLInputElement;
-      const event = new CustomEvent("filter-changed", {
+      const event = new CustomEvent("time-changed", {
         bubbles: true,
-        detail: { filter: target.value },
+        detail: { time: target.value },
       });
       target.dispatchEvent(event);
     });
   });
+
+  const difficultyRadioButtons = document.querySelectorAll("input[name='recipe-difficulty']");
+  difficultyRadioButtons.forEach((difficultyRadioButton) => {
+    difficultyRadioButton.addEventListener("change", (e) => {
+      const target = e.target as HTMLInputElement;
+      const event = new CustomEvent("difficulty-changed", {
+        bubbles: true,
+        detail: { difficulty: target.value },
+      });
+      target.dispatchEvent(event);
+    });
+  });
+
+  const filtersToggleButton: HTMLButtonElement = document.querySelector("#filters-toggle")!;
+  filtersToggleButton.addEventListener("click", () => {
+    const isExpanded = filtersToggleButton.getAttribute("aria-expanded") === "true";
+
+    filtersToggleButton.setAttribute("aria-expanded", String(!isExpanded));
+  });
 </script>
 
 <style>
-  nav {
-    padding: 30px 0;
-    overflow-x: auto;
+  search {
+    display: flex;
+    flex-direction: column;
+  }
 
-    @media (width <= 850px) {
-      padding: 16px 0;
+  .filter-bar:has(#filters-toggle[aria-expanded="false"]) #recipe-filters {
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px) scaleY(0.96);
+  }
+
+  #recipe-filters {
+    display: block;
+    opacity: 1;
+    transform: none;
+    transform-origin: top center;
+    transition:
+      opacity 250ms ease,
+      transform 250ms ease,
+      display 250ms allow-discrete;
+  }
+
+  @starting-style {
+    #recipe-filters {
+      opacity: 0;
+      transform: translateY(-10px) scaleY(0.96);
     }
   }
 
-  nav::-webkit-scrollbar {
-    display: none;
+  legend {
+    float: left;
+    margin-bottom: 8px;
+    margin-top: 2px;
+  }
+
+  button::before {
+    content: "+ ";
+  }
+
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin-bottom: 8px;
   }
 
   ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  li {
     display: flex;
-    flex-direction: row;
-    gap: 8px;
+    align-items: center;
   }
 
-  label {
+  input[type="radio"] {
+    appearance: none;
+  }
+
+  button {
+    padding: 6px 0;
+  }
+
+  :global([data-theme="minimal"]) input[type="radio"]::before {
+    content: "( ) ";
+    white-space: pre;
+  }
+
+  :global([data-theme="minimal"]) input[type="radio"]:checked:before {
+    background: radial-gradient(circle closest-side, currentColor 82%, #0000 88%) 1ch 55% / 1ch 0.62em no-repeat;
+  }
+
+  :global([data-theme="minimal"]) label {
+    background-color: transparent;
+    font-weight: 500;
+    padding: 8px 10px;
+
+    @media (width <= 850px) {
+      padding: 4px 6px;
+    }
+  }
+
+  :global([data-theme="minimal"]) button {
+    font-size: 16px;
+  }
+
+  :global([data-theme="minimal"]) .filter-bar::after,
+  :global([data-theme="minimal"]) .filter-bar::before {
+    margin-top: 0px;
+    margin-bottom: 1px;
     display: block;
-    padding: 12px 22px;
-    font-size: medium;
-    font-weight: bold;
-    cursor: pointer;
+    height: 16px;
+    content: var(--dash);
+    overflow: hidden;
+    letter-spacing: 2px;
+    white-space: nowrap;
   }
 
-  input {
-    width: 0;
-    position: absolute;
-    -webkit-appearance: none;
+  :global([data-theme="minimal"]) fieldset::before {
+    margin-top: 0px;
+    margin-bottom: 1px;
+    display: block;
+    height: 16px;
+    content: var(--spaced-dash);
+    overflow: hidden;
+    letter-spacing: 2px;
+    white-space: nowrap;
   }
 
-  input:checked + label {
-    background-color: #303030;
-    color: #fff;
+  :global([data-theme="ticket"]) fieldset:first-of-type {
+    padding-top: 16px;
   }
 
-  :global([data-theme="classic"]) {
-    label {
-      border-radius: 16px;
-      background-color: #fff;
-      color: #777;
-      border: 1px solid #f1f1f1;
-    }
-
-    input:checked + label {
-      background-color: #303030;
-      color: #fff;
-    }
+  :global([data-theme="ticket"]) fieldset:last-of-type {
+    padding-bottom: 16px;
   }
 
-  :global([data-theme="minimal"]) {
-    nav {
-      padding: 20px 0 14px 0;
-
-      @media (width <= 850px) {
-        padding: 14px 0 8px 0;
-      }
-    }
-
-    label {
-      background-color: transparent;
-      font-weight: 500;
-      padding: 8px 10px;
-
-      @media (width <= 850px) {
-        padding: 4px 6px;
-      }
-    }
-
-    input:checked + label {
-      background-color: #d2d2d2;
-      color: #111111;
-    }
+  :global([data-theme="ticket"]) label {
+    border-radius: 4px;
+    padding: 11px 14px 10px;
+    border: 1px solid rgb(53 59 65);
+    background-color: rgb(29 32 35);
+    color: rgb(169 174 180);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.78px;
+    font-family: ui-monospace, monospace;
   }
 
-  :global([data-theme="ticket"]) {
-     nav {
-      padding: 16px 0;
-    }
-
-    label {
-      border-radius: 4px;
-      padding: 11px 14px 10px;
-      border: 1px solid rgb(53 59 65);
-      background-color: rgb(29 32 35);
-      color: rgb(169 174 180);
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 0.78px;
-      font-family: ui-monospace, monospace;
-    }
-
-    input:checked + label {
-      background-color: #f3efe6;
-      border-color: #f3efe6;
-      color: rgb(26 25 24);
-    }
+  :global([data-theme="ticket"]) input:checked + label {
+    background-color: #f3efe6;
+    border-color: #f3efe6;
+    color: rgb(26 25 24);
   }
 </style>

@@ -11,9 +11,8 @@ const recipeSchema = ({ image }: SchemaContext) => z.object({
   duration: z.iso.duration(),
   difficulty: z.enum(DIFFICULTY_ENUM),
   link: z.url().optional(),
-  category: z.enum(["Beguda", "Ramen", "Pasta", "Carn", "Llegums", "Postre", "Esmorzar", "Curry"]),
+  category: z.enum(["Beguda", "Ramen", "Pasta", "Carn", "Llegums", "Postre", "Esmorzar", "Curry", "Entrepa"]),
   wantToDo: z.boolean().optional().default(false),
-  thumbnail: image(),
   heroImage: image(),
   servings: z.number().min(1),
   ingredients: z.array(z.object({

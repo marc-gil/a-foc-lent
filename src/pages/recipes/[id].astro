@@ -1,8 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import ClockIcon from "../../components/home/ClockIcon.astro";
-import { formatDurationCompact as formatDuration } from "../../lib/duration";
+import { formatDurationHHMM as formatDuration } from "../../lib/duration";
 
 export async function getStaticPaths() {
   const recipe = await getCollection("recipes");
@@ -16,17 +15,36 @@ const { recipe } = Astro.props;
 const recipeData = recipe.data;
 ---
 
-<Layout title={recipeData.title}, isHomeScreen={false}>
-  <main>
+<Layout title={recipeData.title} theme="minimal">
+  <header class="site-header" data-theme="minimal">
+    <nav aria-label="Navegació principal">
+      <a href="/a-foc-lent/" class="back" aria-label="Tornar a les receptes">Receptes</a>
+    </nav>
+  </header>
+  <main data-theme="minimal">
     <article>
       <header>
+        <img
+          src={recipeData.heroImage?.src}
+          alt={recipeData.title}
+          width={recipeData.heroImage?.width}
+          height={recipeData.heroImage?.height}
+        />
         <div class="hero">
-          <span class="category" data-category={recipeData.category}>
-            {recipeData.category}
-          </span>
-
+          <time datetime={recipeData.duration}>
+            {formatDuration(recipeData.duration)}
+          </time>
           <h1>{recipeData.title}</h1>
-
+          <dl>
+            <dt class="visually-hidden">Categoria</dt>
+            <dd class="category" data-category={recipeData.category}>
+              {recipeData.category}
+            </dd>
+            <dt class="visually-hidden">Dificultat</dt>
+            <dd data-difficulty={recipeData.difficulty} class="difficulty">
+              {recipeData.difficulty}
+            </dd>
+          </dl>
           {
             recipeData.tags && recipeData.tags.length > 0 && (
               <ul aria-label="Etiquetes" style="display: none;">
@@ -36,38 +54,20 @@ const recipeData = recipe.data;
               </ul>
             )
           }
-          <dl>
-            <dt class="visually-hidden">Dificultat</dt>
-            <dd data-difficulty={recipeData.difficulty} class="difficulty">
-              {recipeData.difficulty}
-            </dd>
-            <dt class="visually-hidden">Durada</dt>
-            <dd>
-              <time datetime={recipeData.duration}>
-                <ClockIcon aria-hidden="true" focusable="false" />
-                {formatDuration(recipeData.duration)}
-              </time>
-            </dd>
-          </dl>
         </div>
-
-        <img
-          src={recipeData.heroImage?.src}
-          alt={recipeData.title}
-          width={recipeData.heroImage?.width}
-          height={recipeData.heroImage?.height}
-        />
       </header>
-      <hr />
+
       <div class="recipe">
         <section class="ingredients">
           <header>
-            <h2>Ingredients</h2>
-            {
-              recipeData.servings && (
-                <span class="servings">{`per a ${recipeData.servings} ${recipeData.servings > 1 ? "racions" : "ració"}`}</span>
-              )
-            }
+            <h2>
+              Ingredients
+              {
+                recipeData.servings && (
+                  <span class="servings">{` per a ${recipeData.servings} ${recipeData.servings > 1 ? "racions" : "ració"}:`}</span>
+                )
+              }
+            </h2>
           </header>
           <ul>
             {
@@ -77,9 +77,7 @@ const recipeData = recipe.data;
                     <span class="quantity">{ingredient.quantity}</span>
                     <span class="ingredient-name">
                       {ingredient.ingredient}
-                      {ingredient.comments && (
-                        <span class="comment">{` (${ingredient.comments})`}</span>
-                      )}
+                      {ingredient.comments && <span class="comment">{` (${ingredient.comments})`}</span>}
                     </span>
                   </li>
                 );
@@ -106,100 +104,66 @@ const recipeData = recipe.data;
 </Layout>
 
 <style>
-  article {
-    padding: 24px;
-
-    @media (width <= 850px) {
-      padding: 16px;
-    }
+  main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+    padding: 10px 20px 30px 20px;
   }
 
-  h1 {
-    font-size: 42px;
-
-    @media (width <= 850px) {
-      font-size: 30px;
-      line-height: 1.5;
-      order: 1;
-      width: 100%;
-      text-align: center;
-    }
+  .site-header {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: 15px;
+    padding: 30px 20px;
+    padding-bottom: 0px;
   }
 
-  h2 {
-    @media (width <= 850px) {
-      font-size: 22px;
-    }
+  nav {
+    padding-bottom: 2px;
   }
 
-  article > header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 60px;
-    gap: 24px;
-
-    @media (width <= 850px) {
-      flex-direction: column;
-      margin-bottom: 22px;
-      gap: 12px;
-    }
-  }
-
-  dl {
-    display: flex;
-    flex-direction: row;
-    gap: 32px;
-
-    @media (width <= 850px) {
-      order: 3;
-      margin: 0;
-      display: flex;
-      gap: 0.75rem;
-    }
-  }
-
-  dd {
-    display: flex;
-    gap: 4px;
-    align-items: center;
+  .back::before {
+    content: "<- ";
+    white-space: pre;
   }
 
   img {
     width: 100%;
     height: auto;
-    border-radius: 32px;
     max-width: 760px;
-
-    @media (width <= 850px) {
-      order: 1;
-    }
   }
 
-  hr {
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 0 -24px;
-
-    @media (width <= 850px) {
-      border: none;
-    }
+  .hero {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 4px 20px;
+    margin: 8px 0;
   }
 
-  ul {
+  time {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 16px;
+  }
+
+  dl {
+    grid-column: 2;
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    gap: 20px;
+    font-size: 15px;
   }
 
-  p {
-    max-width: 75ch;
-    line-height: 2;
-    white-space: pre-line;
-  }
-
-  ol > li {
-    margin-bottom: 12px;
+  h2 {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 2px 0;
+    background-color: #d2d2d2;
   }
 
   .ingredients li {
@@ -208,186 +172,89 @@ const recipeData = recipe.data;
     grid-template-columns: 2fr 5fr;
   }
 
-  .ingredients h2 {
-    @media (width <= 850px) {
-      padding-left: 8px;
-    }
+  .ingredients ul {
+    font-size: 15px;
+    margin-bottom: 8px;
   }
 
-  .quantity {
-    text-align: end;
-    font-variant-numeric: tabular-nums;
+  .ingredients li + li {
+    margin-top: 6px;
   }
 
-  .comment {
-    font-size: 14px;
-    color: rgb(115, 114, 108);
-  }
-
-  .category {
-    width: fit-content;
-    padding: 8px 16px;
-    border-radius: 16px;
-    color: #444;
-    font-size: small;
-
-    @media (width <= 850px) {
-      order: 2;
-    }
-  }
-
-  .difficulty {
-    width: fit-content;
-    padding: 8px 16px;
-    border-radius: 16px;
-    font-size: small;
-    color: #444;
-  }
-
-  .hero {
+  .steps li {
     display: flex;
-    flex-direction: column;
-    gap: 24px;
-    justify-content: center;
-
-    @media (width <= 850px) {
-      flex-direction: row;
-      order: 2;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 12px;
-    }
+    gap: 20px;
+    font-size: 15px;
   }
 
-  .recipe {
-    display: flex;
-    flex-direction: row;
-    margin-top: 60px;
+  .steps li + li {
+    margin-top: 6px;
+  }
 
-    @media (width <= 850px) {
-      margin-top: 0px;
+  .site-header::after,
+  .hero::before,
+  section::before,
+  ul::before,
+  ol::before {
+    line-height: 12px;
+    display: block;
+    font-size: 15px;
+    height: 12px;
+    content: var(--dash);
+    overflow: hidden;
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+
+  .hero::before {
+    grid-column: 1 / -1;
+  }
+
+  @media (width > 850px) {
+    h1 {
+      font-size: 18px;
+    }
+
+    article > header {
+      display: flex;
+      gap: 24px;
       flex-direction: column;
+      align-items: center;
     }
-  }
 
-  .recipe section:first-child {
-    flex: 1 1 0;
-    margin-right: 30px;
-    @media (width <= 850px) {
-      margin-right: 0px;
-      margin-bottom: 24px;
+    article > header::after {
+      line-height: 12px;
+      display: block;
+      font-size: 15px;
+      height: 12px;
+      content: var(--dash);
+      overflow: hidden;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      width: 100%;
     }
-  }
 
-  .recipe section:last-child {
-    flex: 2 1 0;
-  }
-
-  .ingredients {
-    padding: 32px;
-    background-color: #fff;
-    border-radius: 16px;
-    box-shadow: rgba(35, 40, 42, 0.08) 0px 1px 3px 1px;
-
-    @media (width <= 850px) {
-      padding: 12px;
+    section::before {
+      display: none;
     }
-  }
 
-  .ingredients header {
-    display: flex;
-    align-items: baseline;
-    margin-bottom: 16px;
-    justify-content: space-between;
-  }
-
-  .servings {
-    @media (width <= 850px) {
-      padding-right: 8px;
+    .hero::before {
+      display: none;
     }
-  }
 
-  .steps {
-    padding: 0 32px;
-
-    @media (width <= 850px) {
-      padding: 0;
+    .hero {
+      align-self: center;
     }
-  }
 
-  .steps h2 {
-    margin: 0px 0 16px 0;
-  }
+    .recipe {
+      width: 100%;
+      display: flex;
+      gap: 20px;
+    }
 
-  .step {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 8px;
-    position: relative;
-  }
-
-  .step > span {
-    line-height: 1;
-    background-color: #d8d8d8;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 28px;
-    height: 28px;
-    margin-top: 2px;
-  }
-
-  .step::after {
-    content: "";
-    position: absolute;
-    left: 14px;
-    top: 28px;
-    bottom: -12px;
-    width: 1px;
-    background-color: #d8d8d8;
-    background: linear-gradient(to bottom, #d8d8d8 70%, transparent);
-  }
-
-  .step:last-child::after {
-    width: 0;
-  }
-
-  .v2 h1 {
-    view-timeline-name: --header-trigger;
-  }
-
-  .v2 {
-    @media (width <= 850px) {
-      & article {
-        padding: 0px;
-      }
-
-      & article > header {
-        gap: 0;
-      }
-
-      & img {
-        position: relative;
-        z-index: 1;
-        border-radius: 0;
-      }
-
-      & .hero {
-        z-index: 2;
-        margin-top: -20px;
-        background-color: var(--bg-color);
-        padding: 16px;
-        padding-bottom: 0px;
-        border-radius: 24px;
-      }
-
-      & .recipe {
-        padding: 0 16px;
-      }
+    .recipe section {
+      flex: 1 1 0;
+      min-width: 0;
     }
   }
 </style>

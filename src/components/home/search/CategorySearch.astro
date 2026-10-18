@@ -1,0 +1,141 @@
+---
+interface Props {
+  categories: string[];
+}
+
+const { categories } = Astro.props;
+---
+
+<fieldset>
+  <legend class="visually-hidden">Tipus d'apat</legend>
+  <ul class="category-filter" role="list">
+    <li>
+      <input type="radio" name="recipe-filter" id="tots" value="" checked />
+      <label for="tots">Tots</label>
+    </li>
+    {
+      categories.map((category) => (
+        <li>
+          <input type="radio" name="recipe-filter" id={category.toLowerCase()} value={category} />
+          <label data-category={category} for={category.toLowerCase()}>
+            {category}
+          </label>
+        </li>
+      ))
+    }
+  </ul>
+</fieldset>
+
+<script>
+  const filterRadioButtons = document.querySelectorAll("input[name='recipe-filter']");
+  filterRadioButtons.forEach((filterRadioButton) => {
+    filterRadioButton.addEventListener("change", (e) => {
+      const target = e.target as HTMLInputElement;
+      const event = new CustomEvent("filter-changed", {
+        bubbles: true,
+        detail: { filter: target.value },
+      });
+      target.dispatchEvent(event);
+    });
+  });
+</script>
+
+<style>
+  fieldset {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+
+    margin-top: 20px; /* Move to the outter component */
+
+    @media (width <= 850px) {
+      margin-top: 14px; /* Move to the outter component */
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    overflow-x: auto;
+  }
+
+  ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  label {
+    display: block;
+    padding: 12px 22px;
+    font-size: medium;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  input {
+    width: 0;
+    position: absolute;
+    -webkit-appearance: none;
+  }
+
+  input:checked + label {
+    background-color: #303030;
+    color: #fff;
+  }
+
+  :global([data-theme="classic"]) {
+    label {
+      border-radius: 16px;
+      background-color: #fff;
+      color: #777;
+      border: 1px solid #f1f1f1;
+    }
+
+    input:checked + label {
+      background-color: #303030;
+      color: #fff;
+    }
+  }
+
+  :global([data-theme="minimal"]) {
+    label {
+      background-color: transparent;
+      font-weight: 500;
+      padding: 8px 10px;
+
+      @media (width <= 850px) {
+        padding: 4px 6px;
+      }
+    }
+
+    input:checked + label {
+      background-color: #d2d2d2;
+      color: #111111;
+    }
+  }
+
+  :global([data-theme="ticket"]) {
+    fieldset {
+      padding-top: 16px;
+    }
+
+    label {
+      border-radius: 4px;
+      padding: 11px 14px 10px;
+      border: 1px solid rgb(53 59 65);
+      background-color: rgb(29 32 35);
+      color: rgb(169 174 180);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.78px;
+      font-family: ui-monospace, monospace;
+    }
+
+    input:checked + label {
+      background-color: #f3efe6;
+      border-color: #f3efe6;
+      color: rgb(26 25 24);
+    }
+  }
+</style>
