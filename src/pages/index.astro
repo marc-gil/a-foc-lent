@@ -2,22 +2,20 @@
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import RecipeSearch from "../components/home/RecipeSearch.astro";
-import RecipeCard from "../components/home/RecipeCard.astro";
+import RecipeCard from "../components/home/RecipeCardMinimal.astro";
 
 const recipes = await getCollection("recipes");
 
 const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
 ---
 
-<Layout title="El meu receptari personal", isHomeScreen={true}>
-  <main data-theme="classic">
+<Layout title="El meu receptari personal" theme="minimal">
+  <main>
     <header>
-      <span>Benvingut al meu</span>
       <h1>Receptari personal</h1>
     </header>
-
-    <RecipeSearch filters={filters} />
-
+    <hr />
+    <RecipeSearch filters={filters} showSearchIcon={false} />
     <ul>
       {
         recipes.map((recipe) => (
@@ -32,45 +30,48 @@ const filters = [...new Set(recipes.map((recipe) => recipe.data.category))];
 
 <style>
   main {
-    padding: 48px;
-    padding-top: 24px;
-
-    @media (width <= 850px) {
-      padding: 24px;
-      padding-top: 12px;
-    }
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+    padding: 30px 20px;
   }
 
   header {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 42px;
+    margin-bottom: 21px;
 
     @media (width <= 850px) {
-      margin-bottom: 22px;
+      margin-bottom: 11px;
     }
-  }
-
-  header span {
-    color: #5f5e5e;
   }
 
   h1 {
     font-size: 32px;
 
     @media (width <= 850px) {
-      font-size: 28px;
+      font-size: 22px;
     }
   }
 
-  ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 24px;
+  hr {
+    border: 1px solid #000;
+    margin-bottom: 21px;
 
     @media (width <= 850px) {
-      gap: 12px;
+      margin-bottom: 11px;
     }
   }
+
+  li::after {
+    margin-top: 0px;
+    margin-bottom: 1px;
+    display: block;
+    height: 16px;
+    content: var(--spaced-dash);
+    overflow: hidden;
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+  
 </style>
