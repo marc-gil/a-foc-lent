@@ -137,6 +137,15 @@ const { data: recipeData } = Astro.props.recipe;
     line-height: 22.5px;
   }
 
+  a::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: " ";
+  }
+
   span {
     font-family: ui-monospace, monospace;
   }
