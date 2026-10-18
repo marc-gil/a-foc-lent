@@ -133,7 +133,11 @@ const { filters, showSearchIcon = true } = Astro.props;
   legend {
     float: left;
     margin-bottom: 8px;
-    margin-top: 2px;
+  }
+
+  button {
+    -webkit-appearance: none;
+    color: inherit;
   }
 
   button::before {
@@ -200,9 +204,9 @@ const { filters, showSearchIcon = true } = Astro.props;
     white-space: nowrap;
   }
 
-  :global([data-theme="minimal"]) fieldset::before {
+  :global([data-theme="minimal"]) legend::before {
     margin-top: 0px;
-    margin-bottom: 1px;
+    margin-bottom: 4px;
     display: block;
     height: 16px;
     content: var(--spaced-dash);
