@@ -19,7 +19,7 @@ const { data: recipeData } = Astro.props.recipe;
     </a>
   </h2>
   <footer>
-    <span class="category" data-category={recipeData.category}>
+    <span data-category={recipeData.category} class="category">
       {recipeData.category}
     </span>
     <span data-difficulty={recipeData.difficulty} class="difficulty">
@@ -27,106 +27,6 @@ const { data: recipeData } = Astro.props.recipe;
     </span>
   </footer>
 </article>
-
-<script>
-  let selectedCategory: string = "";
-  let selectedTimeComparison: (timeToCompare: string) => boolean = () => true;
-  let selectedDifficulty: string = "";
-  let searchInput: string = "";
-  const recipeCards = document.querySelectorAll("article");
-  document.addEventListener("filter-changed", (e) => {
-    selectedCategory = (e as CustomEvent<{ filter: string }>).detail.filter;
-
-    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
-  });
-
-  document.addEventListener("search-input-changed", (e) => {
-    searchInput = (
-      e as CustomEvent<{ search: string }>
-    ).detail.search.toLowerCase();
-
-    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
-  });
-
-  document.addEventListener("time-changed", (e) => {
-    const receivedTime = (e as CustomEvent<{ time: string }>).detail.time;
-
-    switch(receivedTime) {
-      case "15":
-        selectedTimeComparison = (timeToCompare) => Temporal.Duration.compare(timeToCompare, "PT15M") <= 0;
-        break;
-      case "30":
-        selectedTimeComparison = (timeToCompare) => Temporal.Duration.compare(timeToCompare, "PT30M") <= 0;
-        break;
-      case "60":
-        selectedTimeComparison = (timeToCompare) => Temporal.Duration.compare(timeToCompare, "PT1H") <= 0;
-        break;
-      case "60+":
-        selectedTimeComparison = (timeToCompare) => Temporal.Duration.compare(timeToCompare, "PT1H") > 0;
-        break;
-      default:
-        selectedTimeComparison = () => true;
-    }
-
-    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
-  });
-  
-  document.addEventListener("difficulty-changed", (e) => {
-    const receivedDifficulty = (e as CustomEvent<{ difficulty: string }>).detail.difficulty;
-
-    switch(receivedDifficulty) {
-      case "easy":
-        selectedDifficulty = "Facil";
-        break;
-      case "medium":
-        selectedDifficulty = "Intermedi";
-        break;
-      case "hard":
-        selectedDifficulty = "Dificil";
-        break;
-      default:
-        selectedDifficulty = "";
-    }
-
-    recipeCards.forEach((recipeCard) => applyFilters(recipeCard));
-  });
-
-  function applyFilters(recipeCard: HTMLElement) {
-    const liElement = recipeCard.parentElement!;
-    const catageorySpan = recipeCard!.querySelector(
-      "[data-category]",
-    ) as HTMLElement;
-
-    const difficultySpan = recipeCard!.querySelector(
-      "[data-difficulty]",
-    ) as HTMLElement;
-
-    const timeElement = recipeCard!.querySelector(
-      "time",
-    ) as HTMLTimeElement;
-
-    const title = Array.from(recipeCard.children)
-      .filter((child) => child.tagName == "H2")[0]
-      .textContent.toLowerCase();
-
-    const textMatches = title.includes(searchInput) || searchInput == "";
-    const categoryMatches =
-      selectedCategory === "" ||
-      catageorySpan.dataset.category === selectedCategory;
-
-    const difficultyMatches =
-      selectedDifficulty === "" ||
-      difficultySpan.dataset.difficulty === selectedDifficulty;
-
-    /*const timeMatches = 
-      selectedTime === "" ||
-      Temporal.Duration.compare(timeElement.dateTime, selectedTime) <= 0*/
-    
-    const timeMatches = selectedTimeComparison(timeElement.dateTime);
-
-    liElement.style.display = textMatches && categoryMatches && difficultyMatches && timeMatches ? "block" : "none";
-  }
-</script>
 
 <style>
   article {
@@ -157,7 +57,7 @@ const { data: recipeData } = Astro.props.recipe;
 
   span {
     font-size: 16px;
-    
+
     @media (width <= 850px) {
       font-size: 15px;
     }
