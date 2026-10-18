@@ -14,7 +14,7 @@ const { filters, showSearchIcon = true } = Astro.props;
 <search>
   <SearchInput showIcon={showSearchIcon} />
   <CategorySearch categories={filters} />
-  <div class="filter-bar" data-theme={}>
+  <div class="filter-bar">
     <button id="filters-toggle" type="button" aria-expanded="false" aria-controls="recipe-filters">Filtres</button>
     <div id="recipe-filters">
       <fieldset>
@@ -136,7 +136,6 @@ const { filters, showSearchIcon = true } = Astro.props;
   }
 
   button {
-    -webkit-appearance: none;
     color: inherit;
   }
 
