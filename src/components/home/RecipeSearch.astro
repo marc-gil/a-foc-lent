@@ -254,7 +254,7 @@ const { filters, showSearchIcon = true } = Astro.props;
   :global([data-theme="minimal"]) input[type="radio"]::before {
     content: "( ) ";
     white-space: pre;
-    word-wrap: normal; /*Fix for ios to maintain pre*/
+    white-space-collapse: preserve
   }
 
   :global([data-theme="minimal"]) input[type="radio"]:checked:before {
