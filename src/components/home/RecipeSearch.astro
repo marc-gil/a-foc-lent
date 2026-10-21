@@ -15,11 +15,50 @@ const { filters, showSearchIcon = true } = Astro.props;
   <SearchInput showIcon={showSearchIcon} />
   <CategorySearch categories={filters} />
   <div class="filter-bar">
-    <button id="filters-toggle" type="button" aria-expanded="false" aria-controls="recipe-filters">Filtres</button>
+    <div class="active-filters" role="group">
+      <button id="filters-toggle" type="button" aria-expanded="false" aria-controls="recipe-filters">Filtres</button>
+      <ul aria-label="Filtres actius">
+        <li data-filter="time" data-value="15">
+          <button type="button" aria-label="Elimina el filtre de temps: 15 minuts o menys">
+            15' <span aria-hidden="true">×</span>
+          </button>
+        </li>
+        <li data-filter="time" data-value="30">
+          <button type="button" aria-label="Elimina el filtre de temps: 30 minuts o menys">
+            30' <span aria-hidden="true">×</span>
+          </button>
+        </li>
+        <li data-filter="time" data-value="60">
+          <button type="button" aria-label="Elimina el filtre de temps: 60 minuts o menys">
+            1H <span aria-hidden="true">×</span>
+          </button>
+        </li>
+        <li data-filter="time" data-value="60+">
+          <button type="button" aria-label="Elimina el filtre de temps: 60 minuts o més">
+            1H+ <span aria-hidden="true">×</span>
+          </button>
+        </li>
+        <li data-filter="difficulty" data-value="easy">
+          <button type="button" aria-label="Elimina el filtre de nivell de dificultat: Facil">
+            Facil <span aria-hidden="true">×</span>
+          </button>
+        </li>
+        <li data-filter="difficulty" data-value="medium">
+          <button type="button" aria-label="Elimina el filtre de nivell de dificultat: Intermedi">
+            Intermedi <span aria-hidden="true">×</span>
+          </button>
+        </li>
+        <li data-filter="difficulty" data-value="hard">
+          <button type="button" aria-label="Elimina el filtre de nivell de dificultat: Dificil">
+            Dificil <span aria-hidden="true">×</span>
+          </button>
+        </li>
+      </ul>
+    </div>
     <div id="recipe-filters">
       <fieldset>
         <legend>Temps</legend>
-        <ul role="list">
+        <ul>
           <li>
             <input type="radio" name="recipe-time" id="time-any" value="" checked />
             <label for="time-any">Qualsevol</label>
@@ -44,7 +83,7 @@ const { filters, showSearchIcon = true } = Astro.props;
       </fieldset>
       <fieldset>
         <legend>Dificultat</legend>
-        <ul role="list">
+        <ul>
           <li>
             <input type="radio" name="recipe-difficulty" id="difficulty-any" value="" checked />
             <label for="difficulty-any">Qualsevol</label>
@@ -55,7 +94,7 @@ const { filters, showSearchIcon = true } = Astro.props;
           </li>
           <li>
             <input type="radio" name="recipe-difficulty" id="difficulty-medium" value="medium" />
-            <label for="difficulty-medium">Intermig</label>
+            <label for="difficulty-medium">Intermedi</label>
           </li>
           <li>
             <input type="radio" name="recipe-difficulty" id="difficulty-hard" value="hard" />
@@ -98,6 +137,14 @@ const { filters, showSearchIcon = true } = Astro.props;
 
     filtersToggleButton.setAttribute("aria-expanded", String(!isExpanded));
   });
+
+  //Quan eliminem els filters desde els labels simulem el click de qualsevol
+  document.querySelectorAll<HTMLElement>(".active-filters li[data-filter] button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const { filter } = btn.closest<HTMLElement>("li")!.dataset;
+      document.querySelector<HTMLInputElement>(`#${filter}-any`)!.click();
+    });
+  });
 </script>
 
 <style>
@@ -139,8 +186,12 @@ const { filters, showSearchIcon = true } = Astro.props;
     color: inherit;
   }
 
-  button::before {
+  #filters-toggle::before {
     content: "+ ";
+  }
+
+  #filters-toggle[aria-expanded="true"]::before {
+    content: "- ";
   }
 
   fieldset {
@@ -150,12 +201,12 @@ const { filters, showSearchIcon = true } = Astro.props;
     margin-bottom: 8px;
   }
 
-  ul {
+  fieldset > ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
 
-  li {
+  fieldset > ul > li {
     display: flex;
     align-items: center;
   }
@@ -168,9 +219,51 @@ const { filters, showSearchIcon = true } = Astro.props;
     padding: 6px 0;
   }
 
+  .active-filters {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .active-filters ul {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .active-filters li {
+    display: none;
+  }
+
+  .active-filters > ul > li > button {
+    background-color: #d2d2d2;
+    box-shadow:
+      -0.5ch 0 #d2d2d2,
+      0.5ch 0 #d2d2d2;
+  }
+
+  .active-filters > ul > li > button:hover {
+    text-decoration: line-through solid currentColor 1px;
+  }
+
+  /* Amaga el ul quan no hi ha filter seleccionat*/
+  .filter-bar:has(#time-any:checked):has(#difficulty-any:checked) .active-filters ul {
+    display: none;
+  }
+
+  .filter-bar:has(#time-15:checked) .active-filters li[data-filter="time"][data-value="15"],
+  .filter-bar:has(#time-30:checked) .active-filters li[data-filter="time"][data-value="30"],
+  .filter-bar:has(#time-60:checked) .active-filters li[data-filter="time"][data-value="60"],
+  .filter-bar:has(#time-60\+:checked) .active-filters li[data-filter="time"][data-value="60+"],
+  .filter-bar:has(#difficulty-easy:checked) .active-filters li[data-filter="difficulty"][data-value="easy"],
+  .filter-bar:has(#difficulty-medium:checked) .active-filters li[data-filter="difficulty"][data-value="medium"],
+  .filter-bar:has(#difficulty-hard:checked) .active-filters li[data-filter="difficulty"][data-value="hard"] {
+    display: block;
+  }
+
   :global([data-theme="minimal"]) input[type="radio"]::before {
     content: "( ) ";
     white-space: pre;
+    word-wrap: normal; /*Fix for ios to maintain pre*/
   }
 
   :global([data-theme="minimal"]) input[type="radio"]:checked:before {
