@@ -153,28 +153,22 @@ const { filters, showSearchIcon = true } = Astro.props;
     flex-direction: column;
   }
 
-  .filter-bar:has(#filters-toggle[aria-expanded="false"]) #recipe-filters {
-    display: none;
-    opacity: 0;
-    transform: translateY(-10px) scaleY(0.96);
-  }
-
   #recipe-filters {
-    display: block;
     opacity: 1;
     transform: none;
     transform-origin: top center;
     transition:
       opacity 250ms ease,
       transform 250ms ease,
-      display 250ms allow-discrete;
+      visibility 250ms;
   }
 
-  @starting-style {
-    #recipe-filters {
-      opacity: 0;
-      transform: translateY(-10px) scaleY(0.96);
-    }
+  .filter-bar:has(#filters-toggle[aria-expanded="false"]) #recipe-filters {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scaleY(0.96);
+    height: 0;
+    overflow: hidden;
   }
 
   legend {
