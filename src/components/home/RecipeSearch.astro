@@ -252,9 +252,10 @@ const { filters, showSearchIcon = true } = Astro.props;
   }
 
   :global([data-theme="minimal"]) input[type="radio"]::before {
-    content: "( )\00a0";
+    content: "( )";
     white-space: pre;
-    white-space-collapse: preserve
+    white-space-collapse: preserve;
+    padding-right: 4px;
   }
 
   :global([data-theme="minimal"]) input[type="radio"]:checked:before {
