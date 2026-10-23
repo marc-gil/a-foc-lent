@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { formatDurationHHMM as formatDuration } from "../../lib/duration";
+import ShareIcon from "../../components/icons/Share.astro";
 
 export async function getStaticPaths() {
   const recipe = await getCollection("recipes");
@@ -20,6 +21,9 @@ const recipeData = recipe.data;
     <nav aria-label="Navegació principal">
       <a href="/a-foc-lent/" class="back" aria-label="Tornar a les receptes">Receptes</a>
     </nav>
+    <button id="share-btn">
+      <ShareIcon />
+    </button>
   </header>
   <main data-theme="minimal">
     <article>
@@ -103,6 +107,21 @@ const recipeData = recipe.data;
   </main>
 </Layout>
 
+<script>
+  document.querySelector("#share-btn")?.addEventListener("click", async () => {
+    const pageUrl = window.location.href;
+    const pageTitle = document.title;
+
+    if (navigator.share) {
+      await navigator.share({
+        title: pageTitle,
+        text: `Recepta de ${pageTitle}`,
+        url: pageUrl,
+      });
+    }
+  });
+</script>
+
 <style>
   main {
     width: 100%;
@@ -120,6 +139,9 @@ const recipeData = recipe.data;
     font-size: 15px;
     padding: 30px 20px;
     padding-bottom: 0px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   nav {
@@ -135,6 +157,10 @@ const recipeData = recipe.data;
     width: 100%;
     height: auto;
     max-width: 760px;
+  }
+
+  button {
+    padding: 0 6px;
   }
 
   .hero {
